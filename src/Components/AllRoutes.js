@@ -3,7 +3,11 @@ import { Route, Routes } from "react-router-dom";
 import Home from './Home'
 import Model from './Model'
 import Navbar from "./Navbar";
-const AllRoutes = ()=>{
+import Topic from './Topic'
+import About from './About'
+import Footer from "./Footer";
+import Campus from "./Campus";
+function AllRoutes (){
     return (<>
         <div className="bg-white">
       <div className="relative isolate px-6 pt-14 lg:px-8">
@@ -22,11 +26,16 @@ const AllRoutes = ()=>{
         <Navbar/>
         <Routes>
             <Route path="/" element={<Home/>}/>
-            <Route path="/department" element={<p>ajsdajksdk</p>}/>
+            <Route path="/department" element={<Topic/>}/>
+            <Route path="/department/:department/" element={<Topic/>} />
+            <Route path="/department/:department/:subject" element={<Topic/>} />
             <Route path="/department/:department/:subject/:topic" element={<Model/>} />
+            <Route path="/about" element={<About/>}/>
+            <Route path="/campus" element={<Campus/>}/>
         </Routes>
       </div>
     </div>
+    <Footer/>
     </>)
 }
 

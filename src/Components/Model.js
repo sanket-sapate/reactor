@@ -1,9 +1,7 @@
 import React from "react";
 
 const Model = ()=>{
-    return (<p>
-        ajskdhasjkdh
-    </p>)
+    return (<></>)
 }
 
 export default Model
