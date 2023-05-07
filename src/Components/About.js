@@ -1,6 +1,7 @@
 import React from "react";
 
 const About = ()=>{
+    document.title = 'About Project'
     return <div>
         <div className="mt-8 font-bold tracking-tight text-gray-900 text-3xl text-center sm:text-left">
             About Project

@@ -7,6 +7,7 @@ import Topic from './Topic'
 import About from './About'
 import Footer from "./Footer";
 import Campus from "./Campus";
+import Contribute from "./Contribute";
 function AllRoutes (){
     return (<>
         <div className="bg-white">
@@ -32,6 +33,7 @@ function AllRoutes (){
             <Route path="/department/:department/:subject/:topic" element={<Model/>} />
             <Route path="/about" element={<About/>}/>
             <Route path="/campus" element={<Campus/>}/>
+            <Route path='/contribute' element={<Contribute/>} />
         </Routes>
       </div>
     </div>
