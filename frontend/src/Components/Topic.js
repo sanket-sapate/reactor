@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
+import store from "../Redux/store";
 
 const Topic = ()=>{
     const {department} = useParams()
-    const data = useSelector((storeData)=>storeData)
+    const departments = useSelector((storeData)=>storeData.department)
+    const [dummy,setDummy]= useState(1)
+    store.subscribe(()=>setDummy((prev)=>prev+1))
     document.title = 'Choose Topic'
     return <div className="min-h-[88vh]">
         <div className="pt-10 font-semibold text-lg">
@@ -16,19 +19,20 @@ const Topic = ()=>{
             </div>
             <div className="my-5 grid gap-y-6 grid-cols-2 sm:flex ">
                 {
-                    Object.keys(data).map((e,i)=>{
-                        return <Link key={e} to={"/department/"+e+'/3d'} className="">
+                    departments?.map((e,i)=>{
+                      console.log(e)
+                        return <Link key={e.title} to={"/department/"+e.title.toLowerCase()+'/3d'} className="">
                         <span className="w-full flex justify-center sm:mr-7" >
-                        {department===e?<button
+                        {department===e.title.toLowerCase()?<button
                           type="button"
                           className="inline-flex items-center min-w-[70px] justify-center capitalize rounded-md bg-indigo-600 text-white px-3 py-2 text-sm font-semibold  shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         >
-                          {e}
+                          {e?.title}
                         </button>:<button
                           type="button"
                           className="rounded-md capitalize justify-center min-w-[70px] bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                         >
-                          {e}
+                          {e?.title}
                         </button>}
                       </span></Link>
                     })
@@ -36,7 +40,7 @@ const Topic = ()=>{
             </div>
         </div>
 
-        {department && Object.keys(data).length?<div className="py-5">
+        {/* {department && Object.keys(data).length?<div className="py-5">
             <div className="text-lg font-bold">
                 Choose Topic :
             </div>
@@ -56,7 +60,7 @@ const Topic = ()=>{
                     })
                 }
             </div>
-        </div>: ''}
+        </div>: ''} */}
     </div>
 }
 

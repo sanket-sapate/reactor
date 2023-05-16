@@ -7,6 +7,7 @@ const path = require('path');
 
 const connectDatabase = require('./database/connectDatabase.js');
 const authRouter = require('./routes/auth.js');
+const deptRouter = require('./routes/department.js');
 
 const app = express();
 
@@ -23,7 +24,7 @@ app.get('/hello', (req, res, next) => {
 })
 
 app.use('/api/auth', authRouter);
-
+app.use('/api/department',deptRouter);
 app.use('/', express.static('../frontend/build'));
 
 app.get('*', (req, res) => {

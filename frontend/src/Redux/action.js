@@ -1,12 +1,19 @@
-export const action = (dispatch,getState)=>{
-    if(!Object.keys(getState()).length){
-        fetch('https://vnit-scholar.onrender.com/departments')
-        .then((e)=>e.json())
-        .then((payload)=>{
-            dispatch({
-                type:"ADD-Data",
-                payload
-            })
+import Axios from 'axios'
+import config from '../config.js';
+
+const axios = Axios.create({
+    baseURL: config.API_BASE_URL,
+    headers: {
+        'Content-Type': 'application/json'
+    },
+})
+
+export const action = async (dispatch,getState)=>{
+    if(!getState().department){
+        let {data:payload} = await axios.get('/department')
+        dispatch({
+            type:"ADD-DEPARTMENT",
+            payload
         })
     }
 }
