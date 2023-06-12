@@ -37,5 +37,6 @@ connectDatabase()
 .then(() => {
     app.listen(port, () => {
         console.log(`Server listening to http requests on http://localhost:${port}`)
+        return
     })
 })

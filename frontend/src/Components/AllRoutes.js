@@ -8,6 +8,8 @@ import About from './About'
 import Footer from "./Footer";
 import Campus from "./Campus";
 import Contribute from "./Contribute";
+import Register from "./Register";
+import IsLogged from "./PrivateRoutes/IsLogged";
 function AllRoutes (){
     return (<>
         <div className="bg-white">
@@ -34,6 +36,8 @@ function AllRoutes (){
             <Route path="/about" element={<About/>}/>
             <Route path="/campus" element={<Campus/>}/>
             <Route path='/contribute' element={<Contribute/>} />
+            <Route path='/signin' element={<IsLogged to='/'><Register/></IsLogged>}/>
+            <Route path='*' element={<div>Not found</div>}/>
         </Routes>
       </div>
     </div>

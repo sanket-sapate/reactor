@@ -8,8 +8,10 @@ const TopicSchema = new mongoose.Schema({
         name:String,
         username:String
     },
-    despription:String,
-    redirect_link:String
+    despription:[String],
+    redirect_link:String,
+    subject:String,
+    url_param:String
 }, {
     timestamps: true
 })

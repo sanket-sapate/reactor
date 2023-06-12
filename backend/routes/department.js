@@ -1,11 +1,11 @@
 
 const express = require('express');
-const { getDepartments } = require('../controllers/department.js');
+const { getDepartments ,getTopic,getTopics} = require('../controllers/department.js');
 
 const deptRouter = express.Router();
 
 deptRouter.get('/', getDepartments);
-deptRouter.get('/:subject', getDepartments);
-deptRouter.get('/:subject/:topic', getDepartments);
+deptRouter.get('/:subject', getTopics);
+deptRouter.get('/:subject/:topic', getTopic);
 
 module.exports = deptRouter;

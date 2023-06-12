@@ -1,7 +1,6 @@
 const { User } = require("../database/User.js")
 const jwt = require('jsonwebtoken');
 const config = require("../config/config");
-const axios = require('axios')
 const brcypt = require('bcryptjs');
 
 function generateToken(user) {
@@ -16,10 +15,10 @@ function generateToken(user) {
 async function register(req, res) {
     try {
         let {
-            name, email, password
+            email, password
         } = req.body;
 
-        if (!name || !email || !password) {
+        if (!email || !password) {
             return res.status(400).send({
                 error: 'Incomplete data'
             })
@@ -43,8 +42,17 @@ async function register(req, res) {
             password
         });
 
+        const token = generateToken(user);
+        const { _id, name, image } = user;
+
         return res.send({
-            message: 'Registration successful'
+            message: 'Login successful',
+            data: {
+                token,
+                user: {
+                    _id, name, email, image
+                }
+            }
         })
 
     } catch(err) {
@@ -115,8 +123,43 @@ async function getLoggedInUser(req, res) {
     }
 }
 
+async function googleLogin(req,res){
+    try {
+        let {token} = req.body
+        let {email,name,picture:image} = jwt.decode(token)
+        let user = await User.findOne({
+            email,
+        })
+        if(!user){
+            user = await User.create({
+                name, email, 
+                signinMethod: 'google-signin',image
+            });
+            req.body.redirect = true
+        }
+        token = generateToken(user);
+        const { _id} = user;
+
+        return res.send({
+            message: 'Login successful',
+            data: {
+                token,
+                user: {
+                    _id, name, email, image
+                },
+                redirect : req.body.redirect?true:false
+            }
+        })
+    } catch (error) {
+        return res.status(500).send({
+            error:'Something went wrong'
+        })
+    }
+}
+
 module.exports = {
     register,
     login,
-    getLoggedInUser
+    getLoggedInUser,
+    googleLogin
 }
