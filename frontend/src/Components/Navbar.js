@@ -19,6 +19,7 @@ const Navbar = ()=>{
             <Link to="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Reactor</span>
               <img
+                referrerPolicy="no-referrer"
                 className="h-8 w-auto"
                 src="https://upload.wikimedia.org/wikipedia/en/3/36/VNIT_logo.jpeg?20210930001635"
                 alt=""

@@ -2,7 +2,6 @@ import React from "react";
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 
 function Contribute(){
-    // const [input,setInput] = useState({})
     document.title = 'Contribute'
   return (
     <form className="sm:w-1/2 mx-auto my-6">

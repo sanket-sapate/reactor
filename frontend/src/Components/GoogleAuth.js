@@ -41,7 +41,7 @@ const GoogleAuth = () => {
       const scriptTag = document.querySelector(`script[src="${src}"]`)
       if (scriptTag) document.body.removeChild(scriptTag)
     }
-  },[])
+  })
   const {TOAST_UI,SET_COOKIEE} = config
   function handleCredentialResponse(response) {
     googleApi(response)

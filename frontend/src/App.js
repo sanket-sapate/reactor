@@ -6,16 +6,18 @@ import { Routes,Route } from 'react-router-dom';
 import { isLogin } from './Redux/action';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
+import Login from './Components/Login';
+import IsLogged from './Components/PrivateRoutes/IsLogged';
 
 function App() {
   const dispatch = useDispatch()
   useEffect(()=>{
     dispatch(isLogin())
-  },[])
+  },[dispatch])
   return (
     <>
       <Routes>
-        <Route path='/1' element={<>1</>} />
+        <Route path='/signin' element={<IsLogged to='/'><Login/></IsLogged>} />
         <Route path='*' element={<AllRoutes/>} />
       </Routes>
       <ToastContainer/>

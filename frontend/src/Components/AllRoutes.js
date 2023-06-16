@@ -1,15 +1,13 @@
-import React from "react";
+import React,{Suspense,lazy} from "react";
 import { Route, Routes } from "react-router-dom";
-import Home from './Home'
-import Model from './Model'
-import Navbar from "./Navbar";
-import Topic from './Topic'
-import About from './About'
-import Footer from "./Footer";
-import Campus from "./Campus";
-import Contribute from "./Contribute";
-import Register from "./Register";
-import IsLogged from "./PrivateRoutes/IsLogged";
+const Home = lazy( ()=>import  ('./Home'))
+const Model = lazy( ()=>import  ('./Model'))
+const Navbar = lazy( ()=>import  ("./Navbar"))
+const Topic = lazy( ()=>import  ('./Topic'))
+const About = lazy( ()=>import  ('./About'))
+const Footer = lazy( ()=>import  ("./Footer"))
+const Campus = lazy( ()=>import  ("./Campus"))
+const Contribute = lazy( ()=>import  ("./Contribute"))
 function AllRoutes (){
     return (<>
         <div className="bg-white">
@@ -27,6 +25,7 @@ function AllRoutes (){
           />
         </div>
         <Navbar/>
+        <Suspense fallback={<div>Loading...</div>}>
         <Routes>
             <Route path="/" element={<Home/>}/>
             <Route path="/department" element={<Topic/>}/>
@@ -36,9 +35,9 @@ function AllRoutes (){
             <Route path="/about" element={<About/>}/>
             <Route path="/campus" element={<Campus/>}/>
             <Route path='/contribute' element={<Contribute/>} />
-            <Route path='/signin' element={<IsLogged to='/'><Register/></IsLogged>}/>
             <Route path='*' element={<div>Not found</div>}/>
         </Routes>
+        </Suspense>
       </div>
     </div>
     <Footer/>
