@@ -1,7 +1,15 @@
-import React from "react";
+import React,{useEffect, useRef} from "react";
 import GoogleAuth from "./GoogleAuth";
-
+import ReCAPTCHA from "react-google-recaptcha";
+import config from "../config.js";
 function LoginForm(){
+    const {RECAPTCHA_KEY} = config;
+    const captchaRef = useRef(null);
+    useEffect(() => {
+        if (captchaRef) {
+            console.log(captchaRef);
+        }
+    }, []);
     return (<>
     <div className="relative isolate pt-[calc(50vh+10vw)] sm:pt-0 lg:px-8">
         <div
@@ -68,7 +76,12 @@ function LoginForm(){
                     />
                 </div>
                 </div>
-
+                <div className="flex items-center justify-center" style={{alignItems:'center'}}>
+                    <ReCAPTCHA
+                    sitekey={RECAPTCHA_KEY}
+                    ref={captchaRef}
+                    />
+                </div>
                 <div>
                 <button
                     type="submit"

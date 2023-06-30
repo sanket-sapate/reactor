@@ -1,5 +1,6 @@
 import React,{Suspense,lazy} from "react";
 import { Route, Routes } from "react-router-dom";
+import LoadingComp from "./LoadingComp";
 const Home = lazy( ()=>import  ('./Home'))
 const Model = lazy( ()=>import  ('./Model'))
 const Navbar = lazy( ()=>import  ("./Navbar"))
@@ -8,6 +9,8 @@ const About = lazy( ()=>import  ('./About'))
 const Footer = lazy( ()=>import  ("./Footer"))
 const Campus = lazy( ()=>import  ("./Campus"))
 const Contribute = lazy( ()=>import  ("./Contribute"))
+const IsNotLogged = lazy( ()=>import  ('./PrivateRoutes/IsNotLogged'))
+const Account = lazy( ()=>import  ('./Account'))
 function AllRoutes (){
     return (<>
         <div className="bg-white">
@@ -25,7 +28,7 @@ function AllRoutes (){
           />
         </div>
         <Navbar/>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<LoadingComp/>}>
         <Routes>
             <Route path="/" element={<Home/>}/>
             <Route path="/department" element={<Topic/>}/>
@@ -35,6 +38,8 @@ function AllRoutes (){
             <Route path="/about" element={<About/>}/>
             <Route path="/campus" element={<Campus/>}/>
             <Route path='/contribute' element={<Contribute/>} />
+            <Route path='/account' element={<IsNotLogged to='/'><Account/></IsNotLogged>} />
+            <Route path='/loading' element={<LoadingComp/>} />
             <Route path='*' element={<div>Not found</div>}/>
         </Routes>
         </Suspense>

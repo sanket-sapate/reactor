@@ -1,6 +1,7 @@
 const config = {
     API_BASE_URL: process.env.REACT_APP_API_BASE_URL,
     APP_NAME: process.env.REACT_APP_APP_NAME,
+    RECAPTCHA_KEY : process.env.REACT_APP_RECAPTCHA_KEY,
     TOAST_UI : {
       position: "top-right",
       autoClose: 3000,
@@ -31,7 +32,10 @@ const config = {
         }
       }
       return null;
-    }
+    },
+    DELETE_COOKIE : function (cname) {
+      document.cookie = cname + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    },
   };
   
   export const constants = {
