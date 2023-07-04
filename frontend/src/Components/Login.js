@@ -2,9 +2,11 @@ import Spline from "@splinetool/react-spline";
 import React from "react";
 import {useNavigate} from 'react-router-dom'
 import LoginForm from "./LoginForm";
+import ForgetPass from "./ForgetPass";
 
 function Login() {
     const navigate = useNavigate()
+    const [isForget,setIsForget] = React.useState(false)
     return <>
         <div className="h-12 sm:z-20 flex justify-start place-content-center" style={{alignItems:'center'}}>
             <img onClick={()=>navigate(-1)}  src="https://cdn-icons-png.flaticon.com/512/545/545680.png" alt="back-button" className="ml-6 cursor-pointer z-10 h-10 w-10"/>
@@ -14,7 +16,9 @@ function Login() {
                 <Spline style={{width:'100%',height:'100%'}} scene="https://prod.spline.design/TI8n8xQ3KxjXRev1/scene.splinecode"/>
             </div>
             <div className="bg-white min-w-[70vw] sm:min-w-[40vw] sm:w-[40vw]">
-                <LoginForm/>
+                {
+                    !isForget?<LoginForm setIsForget={setIsForget}/>:<ForgetPass setIsForget={setIsForget}/>
+                }
             </div>
         </div>
     </>

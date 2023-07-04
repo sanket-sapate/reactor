@@ -1,8 +1,9 @@
 const { User } = require("../database/User.js")
 const jwt = require('jsonwebtoken');
 const config = require("../config/config");
+const sendEmail = require("./sendEmail.js");
 const brcypt = require('bcryptjs');
-
+const {verifyRecaptcha} = require("./recaptcha.js");
 function generateToken(user) {
     const { _id, name, email, image} = user;
 
@@ -66,22 +67,21 @@ async function login(req, res) {
     try {
 
         const {
-            email, password
+            email, password,tokenRecaptcha
         } = req.body;
-
+        let captcha = await verifyRecaptcha(tokenRecaptcha)
+        if(!captcha){
+            return res.status(400).send({
+                error: 'Invalid captcha'
+            })
+        }
         let user = await User.findOne({
             email, 
         })
 
-        if (!user) {
+        if (!user || !brcypt.compareSync(password, user.password)) {
             return res.status(400).send({
-                error: 'User with email does not exist'
-            })
-        }
-
-        if (!brcypt.compareSync(password, user.password)) {
-            return res.status(400).send({
-                error: 'Wrong password'
+                error: 'Invalid credentials'
             })
         }
 
@@ -157,9 +157,68 @@ async function googleLogin(req,res){
     }
 }
 
+async function forgetPassword(req,res){
+    try {
+        let {email,tokenRecaptcha} = req.body
+        let captcha = await verifyRecaptcha(tokenRecaptcha)
+        if(!captcha){
+            return res.status(400).send({
+                error: 'Invalid captcha'
+            })
+        }
+        let user = await User.findOne({
+            email, 
+        })
+
+        if (user) {
+            const token = generateToken(email);
+            const response = await sendEmail(user.email,'Reset Password',token)
+            if(!response){
+                return res.status(400).send({
+                    error: 'Something went wrong'
+                })
+            }
+        }
+
+        return res.send({
+            message: 'Reset link sent to your email',
+        })
+    } catch (error) {
+        return res.status(500).send({
+            error:'Something went wrong'
+        })
+    }
+}
+
+async function resetPassword(req,res){
+    try {
+        let {token,password} = req.body
+        let email = jwt.verify(token,config.JWT_SECRET_KEY)
+        let user = await User.findOne({
+            email, 
+        })
+        if(!user){
+            return res.status(400).send({
+                error: 'Invalid token'
+            })
+        }
+        password = brcypt.hashSync(password);
+        user.password = password
+        await user.save()
+        return res.send({
+            message: 'Password reset successful',
+        })
+    } catch (error) {
+        return res.status(500).send({
+            error:'Something went wrong'
+        })
+    }
+}
 module.exports = {
     register,
     login,
     getLoggedInUser,
-    googleLogin
+    googleLogin,
+    forgetPassword,
+    resetPassword
 }
