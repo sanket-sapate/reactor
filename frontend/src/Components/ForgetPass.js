@@ -13,6 +13,7 @@ function ForgetPass({setIsForget}) {
         })
     }
     const captchaRef = useRef(null);
+    document.title = 'Forget Password'
     const {RECAPTCHA_KEY,TOAST_UI} = config;
     function forgetPassword(e){
         e.preventDefault();

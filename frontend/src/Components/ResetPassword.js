@@ -74,7 +74,7 @@ function ResetPassword() {
             resetPasswordApi(token,user.password,tokenRecaptcha)
             .then((res)=>{
                 toast.success(res.data.message,TOAST_UI)
-                navigate('/login')
+                navigate('/signin')
                 captchaRef.current.reset();
             })
             .catch((res)=>{

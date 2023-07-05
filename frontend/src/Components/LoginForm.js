@@ -14,6 +14,7 @@ function LoginForm({setIsForget}){
         email:'',
         password:''
     })
+    document.title = 'Login'
     function onChangeInput(e){
         setUser({
             ...user,
