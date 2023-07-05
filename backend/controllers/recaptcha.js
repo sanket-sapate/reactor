@@ -1,17 +1,17 @@
 const config = require("../config/config");
-
+const axios = require('axios');
 async function verifyRecaptcha (captcha){
     const {RECAPTCHA_KEY} = config;
     let response = false
-    await fetch(`https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_KEY}&response=${captcha}`, {
+    await axios( {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
-        }
-    })
-    .then(res => res.json())
-    .then(json => {
-        response = json.success;
+        },
+        url:`https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_KEY}&response=${captcha}`
+    }).then(res => {
+        console.log(res);
+        response = res.data.success;
     })
     return response;
 }
