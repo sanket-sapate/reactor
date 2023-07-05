@@ -11,7 +11,8 @@ async function sendEmail(to,subject,token) {
           "Body": [
             {
               "ContentType": "HTML",
-              "Content": '<h1>Reset Password</h1><p>Click on the link below to reset your password</p><a href="https://localhost:3000/reset-password/'+token+'">Reset Password</a>'
+              // '<html><body><a referrerpolicy="no-referrer" href="localhost:3000/resetPassword/'+token+'>Reset Password</a><p>Link expires in 15 minutes</p></body></html>
+              "Content": '<h1>Reset Password</h1><p>Click on the link below to reset your password</p><a referrerpolicy="no-referrer" href="localhost:3000/reset-password/'+token+'">Reset Password</a>'
             }
           ],
           "Headers": {
@@ -19,8 +20,8 @@ async function sendEmail(to,subject,token) {
             "age": "34"
           },
           "Postback": "string",
-          // "EnvelopeFrom": "Reactor <admin@conceptlab.live>",
-          "From": "Reactor <sanketsapatevnit@gmail.com>",
+          "EnvelopeFrom": "Reactor <admin@conceptlab.live>",
+          "From": "Reactor <admin@conceptlab.live>",
           "ReplyTo": "Sanket Sapate <sanketsapatevnit@gmail.com>",
           "Subject": subject,
           "Utm": {

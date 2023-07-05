@@ -11,6 +11,7 @@ const Campus = lazy( ()=>import  ("./Campus"))
 const Contribute = lazy( ()=>import  ("./Contribute"))
 const IsNotLogged = lazy( ()=>import  ('./PrivateRoutes/IsNotLogged'))
 const Account = lazy( ()=>import  ('./Account'))
+const ResetPassword = lazy( ()=>import  ('./ResetPassword'))
 function AllRoutes (){
     return (<>
         <div className="bg-white">
@@ -40,6 +41,7 @@ function AllRoutes (){
             <Route path='/contribute' element={<Contribute/>} />
             <Route path='/account' element={<IsNotLogged to='/'><Account/></IsNotLogged>} />
             <Route path='/loading' element={<LoadingComp/>} />
+            <Route path='/reset-password/:token' element={<ResetPassword/>} />
             <Route path='*' element={<div>Not found</div>}/>
         </Routes>
         </Suspense>

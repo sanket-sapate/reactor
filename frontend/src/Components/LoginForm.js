@@ -16,6 +16,7 @@ function LoginForm({setIsForget}){
     })
     function onChangeInput(e){
         setUser({
+            ...user,
             [e.target.name]:e.target.value
         })
     }

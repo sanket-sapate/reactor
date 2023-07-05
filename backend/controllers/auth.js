@@ -75,10 +75,10 @@ async function login(req, res) {
                 error: 'Invalid captcha'
             })
         }
+        
         let user = await User.findOne({
             email, 
         })
-
         if (!user || !brcypt.compareSync(password, user.password)) {
             return res.status(400).send({
                 error: 'Invalid credentials'
@@ -171,7 +171,7 @@ async function forgetPassword(req,res){
         })
 
         if (user) {
-            const token = generateToken(email);
+            const token = generateToken({email});
             const response = await sendEmail(user.email,'Reset Password',token)
             if(!response){
                 return res.status(400).send({
@@ -192,8 +192,14 @@ async function forgetPassword(req,res){
 
 async function resetPassword(req,res){
     try {
-        let {token,password} = req.body
-        let email = jwt.verify(token,config.JWT_SECRET_KEY)
+        let {token,password,recaptchaToken} = req.body
+        let {email} = jwt.verify(token,config.JWT_SECRET_KEY)
+        const captcha = await verifyRecaptcha(recaptchaToken)
+        if(!captcha){
+            return res.status(400).send({
+                error: 'Invalid captcha'
+            })
+        }
         let user = await User.findOne({
             email, 
         })
@@ -214,11 +220,31 @@ async function resetPassword(req,res){
         })
     }
 }
+
+async function checkToken(req,res){
+    try {
+        const {token} = req.body
+        let {email,iat} = jwt.verify(token,config.JWT_SECRET_KEY)
+        if(!email ){
+            throw new Error()
+        }
+        return res.send({
+            message: 'Token verified',
+            result:true
+        })
+    } catch (error) {
+        return res.send({
+            message: 'Token not verified',
+            result:false
+        })
+    }
+}
 module.exports = {
     register,
     login,
     getLoggedInUser,
     googleLogin,
     forgetPassword,
-    resetPassword
+    resetPassword,
+    checkToken
 }

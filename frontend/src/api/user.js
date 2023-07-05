@@ -41,3 +41,17 @@ export async function forgetPasswordApi(email, tokenRecaptcha) {
     tokenRecaptcha,
   });
 }
+
+export async function resetPasswordApi(token, password,recaptchaToken) {
+  return axios.post("/auth/resetPassword", {
+    token,
+    password,
+    recaptchaToken
+  });
+}
+
+export async function checkTokenApi(token) {
+  return axios.post("/auth/checkToken", {
+    token,
+  });
+}
