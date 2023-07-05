@@ -10,7 +10,6 @@ async function verifyRecaptcha (captcha){
         },
         url:`https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_KEY}&response=${captcha}`
     }).then(res => {
-        console.log(res);
         response = res.data.success;
     })
     return response;
