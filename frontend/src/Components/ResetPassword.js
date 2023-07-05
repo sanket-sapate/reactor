@@ -29,7 +29,7 @@ function ResetPassword() {
         if(tokenResponse===false){
             navigate('/')
         }
-    },[tokenResponse])
+    },[tokenResponse,navigate])
     const captchaRef = useRef(null);
     const onChangeInput = (e)=>{
         if(e.target.name==='password'){
