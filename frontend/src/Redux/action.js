@@ -68,7 +68,12 @@ export const userDetailAction = (payload)=>{
 
 export const isLogin = ()=>{
     return async function (dispatch,getState){
-        const data = await axios.get('/auth/loggedInUser')
+        const data = await axios.get('/auth/loggedInUser',{
+            headers: {
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache'
+          }
+        })
         
         dispatch(userDetailAction(data?.data?.data))
     }
