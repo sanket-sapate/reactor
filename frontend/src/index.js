@@ -8,12 +8,13 @@ import store from './Redux/store';
 import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+root.render(<div className='min-h-screen'>
   <Provider store={store}>
     <BrowserRouter>
       <App />
     </BrowserRouter>
   </Provider>
+  </div>
 );
 
 reportWebVitals();

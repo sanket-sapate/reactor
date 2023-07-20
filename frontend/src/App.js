@@ -16,11 +16,11 @@ function App() {
   },[dispatch])
   return (
     <>
+      <ToastContainer/>
       <Routes>
         <Route path='/signin' element={<IsLogged to='/'><Login/></IsLogged>} />
         <Route path='*' element={<AllRoutes/>} />
       </Routes>
-      <ToastContainer/>
     </>
   );
 }

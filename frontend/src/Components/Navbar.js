@@ -86,7 +86,7 @@ const Navbar = ()=>{
               ))}
             </div>
             <div className="py-6">
-              {user?<Link to="/account">
+              {user?<Link to="/profile">
                 <div className="flex align-baseline items-center justify-start">
                     <img
                     className="h-8 rounded-full w-auto"

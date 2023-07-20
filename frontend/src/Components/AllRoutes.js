@@ -10,11 +10,13 @@ const Footer = lazy( ()=>import  ("./Footer"))
 const Campus = lazy( ()=>import  ("./Campus"))
 const Contribute = lazy( ()=>import  ("./Contribute"))
 const IsNotLogged = lazy( ()=>import  ('./PrivateRoutes/IsNotLogged'))
-const Account = lazy( ()=>import  ('./Account'))
+const Profile = lazy( ()=>import  ('./Profile'))
 const ResetPassword = lazy( ()=>import  ('./ResetPassword'))
+const Collections = lazy( ()=>import  ('./Collections'))
+const Favorites = lazy( ()=>import  ('./Favorites'))
 function AllRoutes (){
     return (<>
-        <div className="bg-white">
+        <div className="bg-white min-h-[calc(100vh-1.5rem-3px)]">
       <div className="relative isolate px-6 pt-14 lg:px-8">
         <div
           className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
@@ -39,9 +41,12 @@ function AllRoutes (){
             <Route path="/about" element={<About/>}/>
             <Route path="/campus" element={<Campus/>}/>
             <Route path='/contribute' element={<Contribute/>} />
-            <Route path='/account' element={<IsNotLogged to='/'><Account/></IsNotLogged>} />
+            <Route path='/profile' element={<Profile/>} />
+            <Route path='/profile/:section' element={<IsNotLogged to='/profile'><Profile/></IsNotLogged>} />
             <Route path='/loading' element={<LoadingComp/>} />
             <Route path='/reset-password/:token' element={<ResetPassword/>} />
+            <Route path='/collections' element={<IsNotLogged to="/signin"><Collections/></IsNotLogged>} />
+            <Route path='/favorites' element={<IsNotLogged to="/signin"><Favorites/></IsNotLogged>} />
             <Route path='*' element={<div>Not found</div>}/>
         </Routes>
         </Suspense>
