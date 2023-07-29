@@ -228,6 +228,12 @@ async function checkToken(req,res){
         if(!email ){
             throw new Error()
         }
+        if(iat+15*60<Math.floor(Date.now()/1000)){
+            return res.send({
+                message: 'Time expired',
+                result:false
+            })    
+        }
         return res.send({
             message: 'Token verified',
             result:true

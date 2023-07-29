@@ -21,6 +21,9 @@ function ResetPassword() {
     useEffect(  ()=>{
         async function fetchData(){
             const reply = await checkTokenApi(token)
+            if(!reply.data.result){
+                toast.error(reply.data.message,config.TOAST_UI)
+            }
             setTokenResponse(reply.data.result)
         }
         fetchData()

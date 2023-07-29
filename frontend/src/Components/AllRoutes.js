@@ -10,7 +10,7 @@ const Footer = lazy( ()=>import  ("./Footer"))
 const Campus = lazy( ()=>import  ("./Campus"))
 const Contribute = lazy( ()=>import  ("./Contribute"))
 const IsNotLogged = lazy( ()=>import  ('./PrivateRoutes/IsNotLogged'))
-const Profile = lazy( ()=>import  ('./Profile'))
+// const Profile = lazy( ()=>import  ('./Profile'))
 const ResetPassword = lazy( ()=>import  ('./ResetPassword'))
 const Collections = lazy( ()=>import  ('./Collections'))
 const Favorites = lazy( ()=>import  ('./Favorites'))
@@ -41,8 +41,8 @@ function AllRoutes (){
             <Route path="/about" element={<About/>}/>
             <Route path="/campus" element={<Campus/>}/>
             <Route path='/contribute' element={<Contribute/>} />
-            <Route path='/profile' element={<Profile/>} />
-            <Route path='/profile/:section' element={<IsNotLogged to='/profile'><Profile/></IsNotLogged>} />
+            {/* <Route path='/profile' element={<Profile/>} />
+            <Route path='/profile/:section' element={<IsNotLogged to='/profile'><Profile/></IsNotLogged>} /> */}
             <Route path='/loading' element={<LoadingComp/>} />
             <Route path='/reset-password/:token' element={<ResetPassword/>} />
             <Route path='/collections' element={<IsNotLogged to="/signin"><Collections/></IsNotLogged>} />

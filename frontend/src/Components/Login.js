@@ -3,12 +3,17 @@ import React from "react";
 import {useNavigate} from 'react-router-dom'
 import LoginForm from "./LoginForm";
 import ForgetPass from "./ForgetPass";
-
+import {motion} from 'framer-motion'
 function Login() {
     const navigate = useNavigate()
     const [isForget,setIsForget] = React.useState(false)
     const screen = window.screen.width
-    return <>
+    return <motion.div
+    initial={{opacity:1}}
+    animate={{opacity:1}}
+    exit={{opacity:0}}
+    >
+    {/* // return <> */}
         <div className="h-12 sm:z-20 flex justify-start place-content-center" style={{alignItems:'center'}}>
             <img onClick={()=>navigate(-1)}  src="https://cdn-icons-png.flaticon.com/512/545/545680.png" alt="back-button" className="ml-6 cursor-pointer z-10 h-10 w-10"/>
         </div>
@@ -22,7 +27,8 @@ function Login() {
                 }
             </div>
         </div>
-    </>
+    {/* </> */}
+    </motion.div>
 }
 
 export default Login
