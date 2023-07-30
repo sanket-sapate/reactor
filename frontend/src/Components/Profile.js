@@ -11,12 +11,12 @@ import { FolderIcon,
 import { useSelector } from "react-redux";
 
 const navigation = [
-    { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
-    { name: 'Setting', href: '#', icon: UsersIcon, current: false },
-    { name: 'Collection', href: '#', icon: FolderIcon, current: false },
-    { name: 'Favorites', href: '#', icon: BookmarkIcon, current: false },
-    { name: 'Help', href: '#', icon: QuestionMarkCircleIcon, current: false },
-    { name: 'Tutorial', href: '#', icon: VideoCameraIcon, current: false },
+    { name: 'Dashboard', href: '/', icon: HomeIcon, current: true },
+    { name: 'Setting', href: '/', icon: UsersIcon, current: false },
+    { name: 'Collection', href: '/', icon: FolderIcon, current: false },
+    { name: 'Favorites', href: '/', icon: BookmarkIcon, current: false },
+    { name: 'Help', href: '/', icon: QuestionMarkCircleIcon, current: false },
+    { name: 'Tutorial', href: '/', icon: VideoCameraIcon, current: false },
   ]
   
   function classNames(...classes) {
@@ -106,7 +106,7 @@ const navigation = [
                     </nav>
                   </div>
                   <div className="flex-shrink-0 flex border-t border-indigo-800 p-4">
-                    <a href="#" className="flex-shrink-0 group block">
+                    <a href="/" className="flex-shrink-0 group block">
                       <div className="flex items-center">
                         <div>
                           <img
@@ -159,7 +159,7 @@ const navigation = [
                 </nav>
               </div>
               <div className="flex-shrink-0 flex border-t border-indigo-800 p-4">
-                <a href="#" className="flex-shrink-0 w-full group block">
+                <a href="/" className="flex-shrink-0 w-full group block">
                   <div className="flex items-center">
                     <div>
                       <img
