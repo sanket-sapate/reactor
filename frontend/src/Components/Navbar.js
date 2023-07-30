@@ -90,7 +90,7 @@ const Navbar = ()=>{
                 <div className="flex align-baseline items-center justify-start">
                     <img
                     className="h-8 rounded-full w-auto"
-                    src={user.image}
+                    src={user.image||'https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg'}
                     alt={user.name}
                     />
                     <div className="text-sm font-semibold leading-6 ml-4 text-gray-900">{user.name}</div>

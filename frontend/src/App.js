@@ -26,7 +26,7 @@ function App() {
 			top:0,
 		},
 		exit: {
-      top:`-100vh`
+      opacity:0
 		}
 	};
   const stay = {
