@@ -1,22 +1,33 @@
-import React,{ Fragment, useState } from "react";
+import React,{ Fragment, useEffect, useState,lazy,Suspense } from "react";
 import { Dialog, Transition } from '@headlessui/react'
 import { FolderIcon,
       HomeIcon,
       QuestionMarkCircleIcon,
       Bars3Icon,
-      UsersIcon,
       XMarkIcon,
       BookmarkIcon,
-      VideoCameraIcon} from '@heroicons/react/24/outline'
+      VideoCameraIcon,
+      MagnifyingGlassIcon,
+      Cog6ToothIcon,
+    } from '@heroicons/react/24/outline'
 import { useSelector } from "react-redux";
+import config,{constants} from '../config'
+import { Link, useNavigate, useParams } from "react-router-dom";
+import LoadingComp from "./LoadingComp";
+const Dashboard = lazy ( ()=>import('./UserPaths/Dashboard'))
+const Setting = lazy ( ()=>import('./UserPaths/Setting'))
+const Collection = lazy ( ()=>import('./UserPaths/Collection'))
+const Favorites = lazy ( ()=>import('./UserPaths/Favorites'))
+const Help = lazy ( ()=>import('./UserPaths/Help'))
+const Tutorial = lazy ( ()=>import('./UserPaths/Tutorial'))
 
 const navigation = [
-    { name: 'Dashboard', href: '/', icon: HomeIcon, current: true },
-    { name: 'Setting', href: '/', icon: UsersIcon, current: false },
-    { name: 'Collection', href: '/', icon: FolderIcon, current: false },
-    { name: 'Favorites', href: '/', icon: BookmarkIcon, current: false },
-    { name: 'Help', href: '/', icon: QuestionMarkCircleIcon, current: false },
-    { name: 'Tutorial', href: '/', icon: VideoCameraIcon, current: false },
+    { name: 'Dashboard', href: '/user/dashboard', icon: HomeIcon, current:'dashboard'  },
+    { name: 'Setting', href: '/user/setting', icon: Cog6ToothIcon, current:'setting'  },
+    { name: 'Collection', href: '/user/collection', icon: FolderIcon, current:'collection' },
+    { name: 'Favorites', href: '/user/favorite', icon: BookmarkIcon, current:'favorite'  },
+    { name: 'Help', href: '/user/help', icon: QuestionMarkCircleIcon, current:'help'  },
+    { name: 'Tutorial', href: '/user/tutorial', icon: VideoCameraIcon, current:'tutorial' },
   ]
   
   function classNames(...classes) {
@@ -25,6 +36,33 @@ const navigation = [
   export default function Profile() {
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const user = useSelector((store)=>store.user)
+    const path = useParams()
+    const navigate = useNavigate()
+    useEffect(()=>{
+      setTimeout(()=>{
+        if(!path.section){
+          navigate('dashboard')
+        }
+      },700)
+    })
+    function renderSwitch(){
+      switch(path.section){
+          case 'dashboard':
+            return <Dashboard/>;
+          case 'setting':
+            return <Setting/>;
+          case 'collection':
+            return <Collection/>;
+          case 'favorite':
+            return <Favorites/>;
+          case 'help':
+            return <Help/>;
+          case 'tutorial':
+            return <Tutorial/>;
+          default:
+            return                             
+      }
+    }
     return (
       <>
         {/*
@@ -81,17 +119,19 @@ const navigation = [
                   </Transition.Child>
                   <div className="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
                     <div className="flex-shrink-0 flex items-center px-4">
-                      <img
+                      <Link to="/">
+                        <img
                         className="h-8 w-auto"
-                        src="https://upload.wikimedia.org/wikipedia/en/3/36/VNIT_logo.jpeg?20210930001635"
+                        src={constants.appLogo}
                         alt="Workflow"
-                      />
+                        />
+                       </Link>
                     </div>
                     <nav className="mt-5 px-2 space-y-1">
                       {navigation.map((item) => (
-                        <a
+                        <Link 
                           key={item.name}
-                          href={item.href}
+                          to={item.href}
                           className={classNames(
                             item.current
                               ? 'bg-indigo-800 text-white'
@@ -101,26 +141,26 @@ const navigation = [
                         >
                           <item.icon className="mr-4 flex-shrink-0 h-6 w-6 text-indigo-300" aria-hidden="true" />
                           {item.name}
-                        </a>
+                        </Link>
                       ))}
                     </nav>
                   </div>
                   <div className="flex-shrink-0 flex border-t border-indigo-800 p-4">
-                    <a href="/" className="flex-shrink-0 group block">
+                    <Link to="/" className="flex-shrink-0 group block">
                       <div className="flex items-center">
                         <div>
                           <img
                             className="inline-block h-10 w-10 rounded-full"
-                            src={user?.image||''}
+                            src={user?.image||config.DEFAULT_AVATAR}
                             alt=""
                           />
                         </div>
                         <div className="ml-3">
                           <p className="text-base font-medium text-white">{user?.name||'Full Name'}</p>
-                          <p className="text-sm font-medium text-indigo-200 group-hover:text-white">View profile</p>
+                          <p className="text-sm font-medium text-indigo-200 group-hover:text-white">@{user?._id||'username'}</p>
                         </div>
                       </div>
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </Transition.Child>
@@ -136,49 +176,51 @@ const navigation = [
             <div className="flex-1 flex flex-col min-h-0 bg-indigo-600">
               <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
                 <div className="flex items-center flex-shrink-0 px-4">
-                  <img
-                    className="h-8 w-auto"
-                    src="https://upload.wikimedia.org/wikipedia/en/3/36/VNIT_logo.jpeg?20210930001635"
-                    alt="Workflow"
-                  />
+                  <Link to="/">
+                    <img
+                      className="h-8 w-auto"
+                      src={constants.appLogo}
+                      alt="Workflow"
+                    />
+                  </Link>
                 </div>
                 <nav className="mt-5 flex-1 px-2 space-y-1">
                   {navigation.map((item) => (
-                    <a
+                    <Link
                       key={item.name}
-                      href={item.href}
+                      to={item.href}
                       className={classNames(
-                        item.current ? 'bg-indigo-800 text-white' : 'text-white hover:bg-indigo-700 hover:bg-opacity-75',
+                        item.current===path.section ? 'bg-indigo-800 text-white' : 'text-white hover:bg-indigo-700 hover:bg-opacity-75',
                         'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
                       )}
                     >
                       <item.icon className="mr-3 flex-shrink-0 h-6 w-6 text-indigo-300" aria-hidden="true" />
                       {item.name}
-                    </a>
+                    </Link>
                   ))}
                 </nav>
               </div>
               <div className="flex-shrink-0 flex border-t border-indigo-800 p-4">
-                <a href="/" className="flex-shrink-0 w-full group block">
+                <Link to="/" className="flex-shrink-0 w-full group block">
                   <div className="flex items-center">
                     <div>
                       <img
                         className="inline-block h-9 w-9 rounded-full"
-                        src={user?.image||''}
+                        src={user?.image||config.DEFAULT_AVATAR}
                         alt=""
                       />
                     </div>
                     <div className="ml-3">
                       <p className="text-sm font-medium text-white">{user?.name || 'Full Name'}</p>
-                      <p className="text-xs font-medium text-indigo-200 group-hover:text-white">View profile</p>
+                      <p className="text-xs font-medium text-indigo-200 group-hover:text-white">@{user?._id||'username'}</p>
                     </div>
                   </div>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
-          <div className="md:pl-64 flex flex-col flex-1">
-            <div className="sticky top-0 z-10 md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3 bg-gray-100">
+          <div className="md:pl-64 flex  flex-1 border-b-2 border-b-gray-200">
+            <div className="sticky top-0 z-10  md:hidden px-1 pt-1 sm:pl-3 sm:pt-3 bg-gray-100">
               <button
                 type="button"
                 className="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
@@ -188,20 +230,24 @@ const navigation = [
                 <Bars3Icon className="h-6 w-6" aria-hidden="true" />
               </button>
             </div>
+            <div className="md:hidden border-l-2 my-3"></div>
             <main className="flex-1">
-              <div className="py-6">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                  <h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>
-                </div>
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                  {/* Replace with your content */}
-                  <div className="py-4">
-                    <div className="border-4 border-dashed border-gray-200 rounded-lg h-96" />
-                  </div>
-                  {/* /End replace */}
+              <div className=" flex py-5" style={{alignItems:'center'}}>
+                <div className="flex px-5" style={{alignItems:'center'}}>
+                  <MagnifyingGlassIcon className="mr-3 flex-shrink-0 h-5 w-5 text-indigo-300" aria-hidden="true"/>
+                  <input type="text" placeholder="Search..." className="ml-1 focus-visible:outline-none w-full" />
                 </div>
               </div>
             </main>
+          </div>
+          <div className="md:pl-64">
+            <div className="p-3">
+              <Suspense fallback={<LoadingComp/>}>
+            {
+              renderSwitch()
+            }
+            </Suspense>
+            </div>
           </div>
         </div>
       </>

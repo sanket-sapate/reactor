@@ -26,12 +26,11 @@ function App() {
 			top:0,
 		},
 		exit: {
-      opacity:0
 		}
 	};
   const stay = {
     hidden: {
-      marginTop:`${window.innerHeight}px`
+      marginTop:0
     },
     visible: {
       marginTop:0
@@ -44,8 +43,8 @@ function App() {
     <>
       <ToastContainer/>
         <AnimatePresence initial={false}>
-            <Routes location={location} key={window.location.pathname.includes('profile')}>
-              <Route path='/profile' element={
+            <Routes location={location} key={window.location.pathname.includes('user')}>
+              <Route path='/user' element={
                   <motion.div
                   variants={slideUp}
                   initial='hidden'
@@ -57,7 +56,7 @@ function App() {
                     <Profile/>
                   </motion.div>
               } />
-              <Route path='/profile/:section' element={<IsNotLogged to='/profile'><Profile/></IsNotLogged>} />
+              <Route path='/user/:section' element={<IsNotLogged to='/user'><Profile/></IsNotLogged>} />
               <Route path='*' element={<motion.div
                   variants={stay}
                   exit='exit'

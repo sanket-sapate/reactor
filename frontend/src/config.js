@@ -36,10 +36,11 @@ const config = {
     DELETE_COOKIE : function (cname) {
       document.cookie = cname + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     },
+    DEFAULT_AVATAR : 'https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI='
   };
   
   export const constants = {
-    appLogo: "/logo.svg",
+    appLogo: "https://upload.wikimedia.org/wikipedia/en/3/36/VNIT_logo.jpeg?20210930001635",
     themeColor: "#18e9b4",
   };
   

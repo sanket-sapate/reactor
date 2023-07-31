@@ -6,6 +6,7 @@ import {  XMarkIcon } from '@heroicons/react/24/outline'
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import UserMenu from "./UserMenu";
+import config, { constants } from "../config";
 const Navbar = ()=>{
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const navigation = [
@@ -58,7 +59,7 @@ const Navbar = ()=>{
             <span className="sr-only">Your Company</span>
             <img
               className="h-8 w-auto"
-              src="https://upload.wikimedia.org/wikipedia/en/3/36/VNIT_logo.jpeg?20210930001635"
+              src={constants.appLogo}
               alt=""
             />
           </Link>
@@ -86,11 +87,11 @@ const Navbar = ()=>{
               ))}
             </div>
             <div className="py-6">
-              {user?<Link to="/profile">
+              {user?<Link to="/user">
                 <div className="flex align-baseline items-center justify-start">
                     <img
                     className="h-8 rounded-full w-auto"
-                    src={user.image||'https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg'}
+                    src={user.image||config.DEFAULT_AVATAR}
                     alt={user.name}
                     />
                     <div className="text-sm font-semibold leading-6 ml-4 text-gray-900">{user.name}</div>
