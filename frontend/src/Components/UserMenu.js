@@ -5,10 +5,11 @@ import config from '../config';
 import { useDispatch } from 'react-redux';
 import { userDetailAction } from '../Redux/action';
 import { toast } from 'react-toastify';
+import { BookmarkIcon, FolderIcon,Cog6ToothIcon } from '@heroicons/react/24/outline';
 const navigation = [
-    {name:'Collection',icon:<svg className="mr-2 h-5 w-5" aria-hidden="true" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 13V16H7L16 7L13 4L4 13Z" fill="#EDE9FE" stroke="rgb(79,70,229)" strokeWidth="2"></path></svg>,to:'/user/collection'},
-    {name:'Favorites',icon:<svg className="mr-2 h-5 w-5" aria-hidden="true" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4H12V12H4V4Z" fill="#EDE9FE" stroke="rgb(79,70,229)" strokeWidth="2"></path><path d="M8 8H16V16H8V8Z" fill="#EDE9FE" stroke="rgb(79,70,229)" strokeWidth="2"></path></svg>,to:'/user/'},
-    {name:'Setting',icon:<svg className="mr-2 h-5 w-5" aria-hidden="true" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="8" width="10" height="8" fill="#EDE9FE" stroke="rgb(79,70,229)" strokeWidth="2"></rect><rect x="4" y="4" width="12" height="4" fill="#EDE9FE" stroke="rgb(79,70,229)" strokeWidth="2"></rect><path d="M8 12H12" stroke="rgb(79,70,229)" strokeWidth="2"></path></svg>,to:'/user/'}
+    {name:'Collection',icon:FolderIcon,to:'/user/collection'},
+    {name:'Favorites',icon:BookmarkIcon,to:'/user/favorite'},
+    {name:'Setting',icon:Cog6ToothIcon,to:'/user/settings'}
 ]
 function UserMenu({user}) {
     const [open,setOpen] = useState(false)
@@ -20,7 +21,7 @@ function UserMenu({user}) {
     }
     return <div className="w-56 text-right">
         <div onMouseEnter={()=>setOpen(true)}>
-            <Link to="/user" onClick={()=>setOpen(false)}>
+            <Link to="/user/dashboard" onClick={()=>setOpen(false)}>
                 <div className="flex align-baseline items-center justify-end">
                     <img
                     className="h-8 rounded-full w-auto"
@@ -48,8 +49,8 @@ function UserMenu({user}) {
             <div className="px-1 pt-1 " role="none">
                 {
                     navigation.map((item)=>{
-                        return <Link to={item.to} className='text-gray-900 group flex w-full items-center rounded-md px-2 py-2 text-sm hover:bg-indigo-400 hover:text-slate-50'>
-                            {item.icon}
+                        return <Link to={item.to} className=' group flex w-full items-center rounded-md px-2 py-2 text-indigo-500 text-sm hover:bg-indigo-400 hover:text-slate-50'>
+                            <item.icon className='mr-3 flex-shrink-0 h-6 w-6 text-inherit'/>
                             {item.name}                            
                         </Link>
                     })

@@ -9,9 +9,11 @@ import { FolderIcon,
       VideoCameraIcon,
       MagnifyingGlassIcon,
       Cog6ToothIcon,
+      ChevronDownIcon
     } from '@heroicons/react/24/outline'
 import { useSelector } from "react-redux";
 import config,{constants} from '../config'
+import {Accordion,AccordionHeader,AccordionBody } from '@material-tailwind/react'
 import { Link, useNavigate, useParams } from "react-router-dom";
 import LoadingComp from "./LoadingComp";
 const Dashboard = lazy ( ()=>import('./UserPaths/Dashboard'))
@@ -20,7 +22,9 @@ const Collection = lazy ( ()=>import('./UserPaths/Collection'))
 const Favorites = lazy ( ()=>import('./UserPaths/Favorites'))
 const Help = lazy ( ()=>import('./UserPaths/Help'))
 const Tutorial = lazy ( ()=>import('./UserPaths/Tutorial'))
-
+const setting = [
+  {name:'Forget Password',href:'/user/setting/resetpassword',current:''}
+]
 const navigation = [
     { name: 'Dashboard', href: '/user/dashboard', icon: HomeIcon, current:'dashboard'  },
     { name: 'Setting', href: '/user/setting', icon: Cog6ToothIcon, current:'setting'  },
@@ -38,13 +42,17 @@ const navigation = [
     const user = useSelector((store)=>store.user)
     const path = useParams()
     const navigate = useNavigate()
+    const [accord,setAccord] = useState(false)
     useEffect(()=>{
+      if(window.location.pathname.includes('setting')){
+        setAccord(true)
+      }
       setTimeout(()=>{
-        if(!path.section){
+        if(window.location.pathname==='/user'){
           navigate('dashboard')
         }
       },700)
-    })
+    },[setAccord,navigate])
     function renderSwitch(){
       switch(path.section){
           case 'dashboard':
@@ -128,12 +136,30 @@ const navigation = [
                        </Link>
                     </div>
                     <nav className="mt-5 px-2 space-y-1">
-                      {navigation.map((item) => (
+                      {navigation.map((item,i) => {
+                        if(i===1){
+                          return <Accordion key={item.name} open={accord}>
+                            <AccordionHeader onClick={()=>{setAccord((state)=>!state)}} className="text-white  border-0 hover:bg-indigo-700 hover:bg-opacity-75 group flex items-center px-2 py-2 text-sm font-medium rounded-md"><item.icon className="mr-3 flex-shrink-0 h-6 w-6 text-indigo-300"/>{item.name}<div className="flex-grow flex justify-end"><ChevronDownIcon className="flex-shrink-0 h-6 w-6 text-indigo-300"/></div></AccordionHeader>
+                            <AccordionBody>
+                                {setting.map((item)=>{return <Link
+                                  key={item.name}
+                                  to={item.href}
+                                  className={classNames(
+                                    item.current===path.section ? 'bg-indigo-800 text-white' : 'text-white hover:bg-indigo-700 hover:bg-opacity-75',
+                                    'group flex ml-14 items-center px-2 py-2 text-sm font-medium rounded-md'
+                                  )}
+                                >
+                                  {item.name}
+                                </Link>})}
+                            </AccordionBody>
+                          </Accordion>
+                        }
+                        return(
                         <Link 
                           key={item.name}
                           to={item.href}
                           className={classNames(
-                            item.current
+                            item.current === path.section
                               ? 'bg-indigo-800 text-white'
                               : 'text-white hover:bg-indigo-700 hover:bg-opacity-75',
                             'group flex items-center px-2 py-2 text-base font-medium rounded-md'
@@ -142,7 +168,7 @@ const navigation = [
                           <item.icon className="mr-4 flex-shrink-0 h-6 w-6 text-indigo-300" aria-hidden="true" />
                           {item.name}
                         </Link>
-                      ))}
+                      )})}
                     </nav>
                   </div>
                   <div className="flex-shrink-0 flex border-t border-indigo-800 p-4">
@@ -185,7 +211,25 @@ const navigation = [
                   </Link>
                 </div>
                 <nav className="mt-5 flex-1 px-2 space-y-1">
-                  {navigation.map((item) => (
+                  {navigation.map((item,i) => {
+                    if(i===1){
+                      return <Accordion key={item.name} open={accord}>
+                        <AccordionHeader onClick={()=>{setAccord((state)=>!state)}} className="text-white  border-0 hover:bg-indigo-700 hover:bg-opacity-75 group flex items-center px-2 py-2 text-sm font-medium rounded-md"><item.icon className="mr-3 flex-shrink-0 h-6 w-6 text-indigo-300"/>{item.name}<div className="flex-grow flex justify-end"><ChevronDownIcon className="flex-shrink-0 h-6 w-6 text-indigo-300"/></div></AccordionHeader>
+                        <AccordionBody>
+                            {setting.map((item)=>{return <Link
+                              key={item.name}
+                              to={item.href}
+                              className={classNames(
+                                item.current===path.section ? 'bg-indigo-800 text-white' : 'text-white hover:bg-indigo-700 hover:bg-opacity-75',
+                                'group flex ml-14 items-center px-2 py-2 text-sm font-medium rounded-md'
+                              )}
+                            >
+                              {item.name}
+                            </Link>})}
+                        </AccordionBody>
+                      </Accordion>
+                    }
+                    return(
                     <Link
                       key={item.name}
                       to={item.href}
@@ -197,7 +241,7 @@ const navigation = [
                       <item.icon className="mr-3 flex-shrink-0 h-6 w-6 text-indigo-300" aria-hidden="true" />
                       {item.name}
                     </Link>
-                  ))}
+                  )})}
                 </nav>
               </div>
               <div className="flex-shrink-0 flex border-t border-indigo-800 p-4">
@@ -220,7 +264,7 @@ const navigation = [
             </div>
           </div>
           <div className="md:pl-64 flex  flex-1 border-b-2 border-b-gray-200">
-            <div className="sticky top-0 z-10  md:hidden px-1 pt-1 sm:pl-3 sm:pt-3 bg-gray-100">
+            <div className="sticky top-0 z-10 flex md:hidden px-1 pt-1 sm:pl-3 sm:pt-3 bg-gray-100" style={{alignItems:'center'}}>
               <button
                 type="button"
                 className="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
@@ -230,7 +274,7 @@ const navigation = [
                 <Bars3Icon className="h-6 w-6" aria-hidden="true" />
               </button>
             </div>
-            <div className="md:hidden border-l-2 my-3"></div>
+            <div className="md:hidden border-l-2 ml-6 my-3"></div>
             <main className="flex-1">
               <div className=" flex py-5" style={{alignItems:'center'}}>
                 <div className="flex px-5" style={{alignItems:'center'}}>

@@ -56,7 +56,26 @@ function App() {
                     <Profile/>
                   </motion.div>
               } />
-              <Route path='/user/:section' element={<IsNotLogged to='/user'><Profile/></IsNotLogged>} />
+              <Route path='/user/:section' element={<motion.div
+                  variants={slideUp}
+                  initial='hidden'
+                  animate='visible'
+                  exit='exit'
+                  transition={{ duration: .7  }}
+                  className='w-full h-full absolute min-h-screen bg-white'
+                  ><IsNotLogged to='/user'><Profile/></IsNotLogged>
+                  </motion.div>
+                  } />
+              <Route path='/user/setting/:settingsection' element={<motion.div
+                  variants={slideUp}
+                  initial='hidden'
+                  animate='visible'
+                  exit='exit'
+                  transition={{ duration: .7  }}
+                  className='w-full h-full absolute min-h-screen bg-white'
+                  ><IsNotLogged to='/user'><Profile/></IsNotLogged>
+              </motion.div>
+              } />
               <Route path='*' element={<motion.div
                   variants={stay}
                   exit='exit'

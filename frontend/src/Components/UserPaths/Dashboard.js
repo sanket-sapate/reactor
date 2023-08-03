@@ -1,6 +1,6 @@
 import React from "react";
 
 export default function Dashboard(){
-    console.log('aadsbkjdg')
+    // console.log('aadsbkjdg')
     return <></>
 }
