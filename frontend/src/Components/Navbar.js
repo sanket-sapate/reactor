@@ -1,5 +1,5 @@
 import React from "react";
-import { Bars3Icon} from '@heroicons/react/24/outline'
+import { Bars3Icon, FolderIcon,BookmarkIcon,Cog6ToothIcon,ArrowLeftOnRectangleIcon} from '@heroicons/react/24/outline'
 import { useState } from 'react'
 import { Dialog } from '@headlessui/react'
 import {  XMarkIcon } from '@heroicons/react/24/outline'
@@ -7,6 +7,15 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import UserMenu from "./UserMenu";
 import config, { constants } from "../config";
+import {toast} from 'react-toastify'
+import { useDispatch } from 'react-redux';
+import { userDetailAction } from '../Redux/action';
+const userNavigation = [
+  {name:'Collection',icon:FolderIcon,to:'/user/collection'},
+  {name:'Favorites',icon:BookmarkIcon,to:'/user/favorite'},
+  {name:'Setting',icon:Cog6ToothIcon,to:'/user/settings'}
+]
+
 const Navbar = ()=>{
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const navigation = [
@@ -14,7 +23,13 @@ const Navbar = ()=>{
         { name: 'Contribute', href: '/contribute' },
         { name: '3D Campus', href: '/campus' }
     ]
+    const dispatch = useDispatch()
     const user = useSelector((store)=>store.user)
+    function logout(){
+      config.DELETE_COOKIE('auth-token')
+      dispatch(userDetailAction(null))
+      toast.success('Logout Successful',config.TOAST_UI)
+    }
     return <header className="absolute inset-x-0 top-0 z-50">
         <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
           <div className="flex lg:flex-1">
@@ -87,7 +102,8 @@ const Navbar = ()=>{
               ))}
             </div>
             <div className="py-6">
-              {user?<Link to="/user">
+              {user?<div>
+                <Link onClick={() => setMobileMenuOpen(false)} to="/user/dashboard">
                 <div className="flex align-baseline items-center justify-start">
                     <img
                     className="h-8 rounded-full w-auto"
@@ -96,7 +112,22 @@ const Navbar = ()=>{
                     />
                     <div className="text-sm font-semibold leading-6 ml-4 text-gray-900">{user.name}</div>
                 </div>
-            </Link>:<Link
+            </Link>
+            <div className="mt-4  origin-top-right rounded-md bg-white   focus:outline-none" aria-labelledby="headlessui-menu-button-:r1:" id="headlessui-menu-items-:rk:" role="menu" tabIndex="0" data-headlessui-state="open">
+                {
+                    userNavigation.map((item)=>{
+                        return <Link to={item.to} key={item.name} onClick={() => setMobileMenuOpen(false)} className='mt-4 group flex w-full items-center rounded-md px-2 py-2  text-sm hover:bg-indigo-500 hover:text-slate-50 '>
+                            <item.icon className='mr-3 flex-shrink-0 h-6 w-6 text-indigo-600 group-hover:text-slate-50'/>
+                            {item.name}                            
+                        </Link>
+                    })
+                }
+                <button  onClick={() => {setMobileMenuOpen(false);logout()}} className="text-gray-900 mt-4 group flex w-full items-center rounded-md px-2 py-2 text-sm hover:bg-indigo-500 hover:text-slate-50" tabIndex="-1">
+                    <ArrowLeftOnRectangleIcon className='mr-3 flex-shrink-0 h-6 w-6 text-indigo-600 group-hover:text-slate-50'/>
+                    Logout
+                </button>
+          </div>
+            </div>:<Link
                 onClick={() => setMobileMenuOpen(false)}
                 to="/signin"
                 className="-mx-3 block rounded-lg text-indigo-500 px-3 py-2.5 text-base font-bold leading-7 hover:bg-gray-50"

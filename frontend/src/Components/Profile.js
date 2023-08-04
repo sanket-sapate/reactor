@@ -23,7 +23,8 @@ const Favorites = lazy ( ()=>import('./UserPaths/Favorites'))
 const Help = lazy ( ()=>import('./UserPaths/Help'))
 const Tutorial = lazy ( ()=>import('./UserPaths/Tutorial'))
 const setting = [
-  {name:'Forget Password',href:'/user/setting/resetpassword',current:''}
+  {name:'Account',href:'/user/setting/account',current:''},
+  {name:'Change Password',href:'/user/setting/changepassword',current:''},
 ]
 const navigation = [
     { name: 'Dashboard', href: '/user/dashboard', icon: HomeIcon, current:'dashboard'  },
@@ -142,6 +143,7 @@ const navigation = [
                             <AccordionHeader onClick={()=>{setAccord((state)=>!state)}} className="text-white  border-0 hover:bg-indigo-700 hover:bg-opacity-75 group flex items-center px-2 py-2 text-sm font-medium rounded-md"><item.icon className="mr-3 flex-shrink-0 h-6 w-6 text-indigo-300"/>{item.name}<div className="flex-grow flex justify-end"><ChevronDownIcon className="flex-shrink-0 h-6 w-6 text-indigo-300"/></div></AccordionHeader>
                             <AccordionBody>
                                 {setting.map((item)=>{return <Link
+                                onClick={()=>setSidebarOpen(false)}
                                   key={item.name}
                                   to={item.href}
                                   className={classNames(
@@ -156,6 +158,7 @@ const navigation = [
                         }
                         return(
                         <Link 
+                          onClick={()=>setSidebarOpen(false)}
                           key={item.name}
                           to={item.href}
                           className={classNames(

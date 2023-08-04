@@ -49,8 +49,10 @@ function UserMenu({user}) {
             <div className="px-1 pt-1 " role="none">
                 {
                     navigation.map((item)=>{
-                        return <Link to={item.to} className=' group flex w-full items-center rounded-md px-2 py-2  text-sm hover:bg-indigo-400 hover:text-slate-50 '>
-                            <item.icon className='mr-3 flex-shrink-0 h-6 w-6 text-indigo-500 group-hover:text-slate-50'/>
+                        return <Link to={item.to} 
+                            key={item.name} 
+                            className=' group flex w-full items-center rounded-md px-2 py-2  text-sm hover:bg-indigo-500 hover:text-slate-50 '>
+                            <item.icon className='mr-3 flex-shrink-0 h-6 w-6 text-indigo-600 group-hover:text-slate-50'/>
                             {item.name}                            
                         </Link>
                     })
@@ -58,8 +60,8 @@ function UserMenu({user}) {
                 
             </div>
             <div className="px-1 pb-1" >
-                <button onClick={logout} className="text-gray-900 group flex w-full items-center rounded-md px-2 py-2 text-sm hover:bg-indigo-400 hover:text-slate-50" tabIndex="-1">
-                    <ArrowLeftOnRectangleIcon className='mr-3 flex-shrink-0 h-6 w-6 text-indigo-500 group-hover:text-slate-50'/>
+                <button onClick={logout} className="text-gray-900 group flex w-full items-center rounded-md px-2 py-2 text-sm hover:bg-indigo-500 hover:text-slate-50" tabIndex="-1">
+                    <ArrowLeftOnRectangleIcon className='mr-3 flex-shrink-0 h-6 w-6 text-indigo-600 group-hover:text-slate-50'/>
                     Logout
                 </button>
             </div>
