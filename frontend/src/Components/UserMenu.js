@@ -5,7 +5,7 @@ import config from '../config';
 import { useDispatch } from 'react-redux';
 import { userDetailAction } from '../Redux/action';
 import { toast } from 'react-toastify';
-import { BookmarkIcon, FolderIcon,Cog6ToothIcon } from '@heroicons/react/24/outline';
+import { BookmarkIcon, FolderIcon,Cog6ToothIcon, ArrowLeftOnRectangleIcon } from '@heroicons/react/24/outline';
 const navigation = [
     {name:'Collection',icon:FolderIcon,to:'/user/collection'},
     {name:'Favorites',icon:BookmarkIcon,to:'/user/favorite'},
@@ -49,8 +49,8 @@ function UserMenu({user}) {
             <div className="px-1 pt-1 " role="none">
                 {
                     navigation.map((item)=>{
-                        return <Link to={item.to} className=' group flex w-full items-center rounded-md px-2 py-2 text-indigo-500 text-sm hover:bg-indigo-400 hover:text-slate-50'>
-                            <item.icon className='mr-3 flex-shrink-0 h-6 w-6 text-inherit'/>
+                        return <Link to={item.to} className=' group flex w-full items-center rounded-md px-2 py-2  text-sm hover:bg-indigo-400 hover:text-slate-50 '>
+                            <item.icon className='mr-3 flex-shrink-0 h-6 w-6 text-indigo-500 group-hover:text-slate-50'/>
                             {item.name}                            
                         </Link>
                     })
@@ -58,9 +58,8 @@ function UserMenu({user}) {
                 
             </div>
             <div className="px-1 pb-1" >
-                <button onClick={()=>{console.log(1);logout()}} className="text-gray-900 group flex w-full items-center rounded-md px-2 py-2 text-sm hover:bg-indigo-400 hover:text-slate-50" tabIndex="-1">
-                    <svg className="mr-2 h-5 w-5" aria-hidden="true" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 4H16V10" stroke="rgb(79,70,229)" strokeWidth="2"></path><path d="M16 4L8 12" stroke="rgb(79,70,229)" strokeWidth="2"></path><path d="M8 6H4V16H14V12" stroke="rgb(79,70,229)" strokeWidth="2"></path>
-                    </svg>
+                <button onClick={logout} className="text-gray-900 group flex w-full items-center rounded-md px-2 py-2 text-sm hover:bg-indigo-400 hover:text-slate-50" tabIndex="-1">
+                    <ArrowLeftOnRectangleIcon className='mr-3 flex-shrink-0 h-6 w-6 text-indigo-500 group-hover:text-slate-50'/>
                     Logout
                 </button>
             </div>
