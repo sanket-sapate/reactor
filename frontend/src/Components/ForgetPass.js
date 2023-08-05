@@ -1,9 +1,9 @@
-import React,{useState,useRef} from "react";
+import React,{useState} from "react";
 import config from "../config";
-import ReCAPTCHA from "react-google-recaptcha";
 import {toast} from 'react-toastify'
 import { forgetPasswordApi } from "../api/user";
-function ForgetPass({setIsForget}) {
+import {motion} from 'framer-motion'
+function ForgetPass({setIsForget,captchaRef}) {
     const [user,setUser] = useState({
         email:'',
     })
@@ -12,9 +12,19 @@ function ForgetPass({setIsForget}) {
             [e.target.name]:e.target.value
         })
     }
-    const captchaRef = useRef(null);
+    const anime = {
+        enter :{
+            left:'50vw'
+        },
+        present:{
+            left:0
+        },
+        exit:{
+            left:'50vw'
+        }
+    }
     document.title = 'Forget Password'
-    const {RECAPTCHA_KEY,TOAST_UI} = config;
+    const {TOAST_UI} = config;
     function forgetPassword(e){
         e.preventDefault();
         captchaRef.current.executeAsync()
@@ -43,7 +53,9 @@ function ForgetPass({setIsForget}) {
         })
     }
     return <>
-    <div className="relative isolate pt-[calc(50vh+10vw)] sm:pt-0 lg:px-8">
+    <motion.div variants={anime}
+        exit='exit' animate='present' initial='enter' transition={{duration:1}}
+    className="absolute isolate pt-[calc(50vh+10vw)] sm:pt-0 lg:px-8">
         <div
             className="absolute inset-x-0 top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
             aria-hidden="true"
@@ -86,17 +98,6 @@ function ForgetPass({setIsForget}) {
                         />
                     </div>
                 </div>
-
-                <div>
-                
-                </div>
-                <div className="flex items-center justify-center" style={{alignItems:'center'}}>
-                    <ReCAPTCHA
-                    sitekey={RECAPTCHA_KEY}
-                    ref={captchaRef}
-                    size="invisible"
-                    />
-                </div>
                 <div>
                 <button
                     type="submit"
@@ -120,7 +121,7 @@ function ForgetPass({setIsForget}) {
             </p>
             </div>
         </div>
-    </div>
+    </motion.div>
     </>
     }
 

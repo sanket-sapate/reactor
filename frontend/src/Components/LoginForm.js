@@ -1,15 +1,15 @@
-import React,{useState, useRef} from "react";
+import React,{useState} from "react";
 import GoogleAuth from "./GoogleAuth";
-import ReCAPTCHA from "react-google-recaptcha";
 import config from "../config.js";
 import { loginApi } from "../api/user";
 import {toast} from 'react-toastify'
 import { userDetailAction } from '../Redux/action'
 import { useDispatch } from 'react-redux'
-function LoginForm({setIsForget}){
-    const {RECAPTCHA_KEY,TOAST_UI,SET_COOKIEE} = config;
+import {motion} from 'framer-motion'
+function LoginForm({setIsForget,captchaRef}){
+    const {TOAST_UI,SET_COOKIEE} = config;
     const dispatch = useDispatch();
-    const captchaRef = useRef(null);
+    
     const [user,setUser] = useState({
         email:'',
         password:''
@@ -43,20 +43,22 @@ function LoginForm({setIsForget}){
             captchaRef.current.reset();
         })
     }
+    const anime = {
+        enter :{
+            right:'50vw'
+        },
+        present:{
+            right:0
+        },
+        exit:{
+            right:'50vw'
+        }
+    }
     return (<>
-    <div className="relative isolate pt-[calc(50vh+10vw)] sm:pt-0 lg:px-8">
-        <div
-            className="absolute inset-x-0 top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
-            aria-hidden="true"
-        >
-            <div
-                className="relative -m-1 left-[calc(50%)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%)] sm:w-[72.1875rem]"
-                style={{
-                clipPath:
-                    'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
-                }}
-            />
-        </div>
+    <motion.div className="absolute isolate pt-[calc(50vh+10vw)] sm:pt-0 lg:px-8" variants={anime}
+        exit='exit' animate='present' initial='enter' transition={{duration:1}}
+    >
+        
         <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <img
@@ -111,13 +113,6 @@ function LoginForm({setIsForget}){
                     />
                 </div>
                 </div>
-                <div className="flex items-center justify-center" style={{alignItems:'center'}}>
-                    <ReCAPTCHA
-                    sitekey={RECAPTCHA_KEY}
-                    ref={captchaRef}
-                    size="invisible"
-                    />
-                </div>
                 <div>
                 <button
                     type="submit"
@@ -141,7 +136,7 @@ function LoginForm({setIsForget}){
             </p>
             </div>
         </div>
-    </div>
+    </motion.div>
     </>)
 
 }

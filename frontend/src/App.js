@@ -92,7 +92,7 @@ function App() {
                   >
                     <AllRoutes/>
                   </motion.div>} />
-              <Route path='/signin' element={<IsLogged to='/'><Suspense fallback={LoadingComp}><Login/></Suspense></IsLogged>} />
+              <Route path='/signin' element={<IsLogged to='/'><Suspense fallback={<LoadingComp/>}><Login/></Suspense></IsLogged>} />
             </Routes>
         </AnimatePresence>
     </>
