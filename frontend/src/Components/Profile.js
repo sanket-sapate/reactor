@@ -22,9 +22,10 @@ const Collection = lazy ( ()=>import('./UserPaths/Collection'))
 const Favorites = lazy ( ()=>import('./UserPaths/Favorites'))
 const Help = lazy ( ()=>import('./UserPaths/Help'))
 const Tutorial = lazy ( ()=>import('./UserPaths/Tutorial'))
+const Account = lazy (()=>import ('./Setting/Account'))
 const setting = [
-  {name:'Account',href:'/user/setting/account',current:''},
-  {name:'Change Password',href:'/user/setting/changepassword',current:''},
+  {name:'Account',href:'/user/setting/account',current:'account'},
+  {name:'Change Password',href:'/user/setting/changepassword',current:'changepassword'},
 ]
 const navigation = [
     { name: 'Dashboard', href: '/user/dashboard', icon: HomeIcon, current:'dashboard'  },
@@ -69,7 +70,12 @@ const navigation = [
           case 'tutorial':
             return <Tutorial/>;
           default:
-            return                             
+            switch(path.settingsection){
+              case 'account':
+                return <Account/>
+              default:
+                return <></>
+            }                       
       }
     }
     return (
@@ -147,7 +153,7 @@ const navigation = [
                                   key={item.name}
                                   to={item.href}
                                   className={classNames(
-                                    item.current===path.section ? 'bg-indigo-800 text-white' : 'text-white hover:bg-indigo-700 hover:bg-opacity-75',
+                                    item.current===path.settingsection ? 'bg-indigo-800 text-white' : 'text-white hover:bg-indigo-700 hover:bg-opacity-75',
                                     'group flex ml-14 items-center px-2 py-2 text-sm font-medium rounded-md'
                                   )}
                                 >
@@ -200,7 +206,7 @@ const navigation = [
           </Transition.Root>
   
           {/* Static sidebar for desktop */}
-          <div className="hidden md:flex md:w-64 md:flex-col md:absolute md:inset-y-0">
+          <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
             {/* Sidebar component, swap this element with another sidebar if you like */}
             <div className="flex-1 flex flex-col min-h-0 bg-indigo-600">
               <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
@@ -217,14 +223,17 @@ const navigation = [
                   {navigation.map((item,i) => {
                     if(i===1){
                       return <Accordion key={item.name} open={accord}>
-                        <AccordionHeader onClick={()=>{setAccord((state)=>!state)}} className="text-white  border-0 hover:bg-indigo-700 hover:bg-opacity-75 group flex items-center px-2 py-2 text-sm font-medium rounded-md"><item.icon className="mr-3 flex-shrink-0 h-6 w-6 text-indigo-300"/>{item.name}<div className="flex-grow flex justify-end"><ChevronDownIcon className="flex-shrink-0 h-6 w-6 text-indigo-300"/></div></AccordionHeader>
+                        <AccordionHeader onClick={()=>{setAccord((state)=>!state)}} className={classNames(
+                        path.settingsection && !accord ? 'bg-indigo-800 text-white' : 'text-white hover:bg-indigo-700 hover:bg-opacity-75',
+                        'border-0 mb-2 group flex items-center px-2 py-2 text-sm font-medium rounded-md'
+                      )}><item.icon className="mr-3 flex-shrink-0 h-6 w-6 text-indigo-300"/>{item.name}<div className="flex-grow flex justify-end"><ChevronDownIcon className="flex-shrink-0 h-6 w-6 text-indigo-300"/></div></AccordionHeader>
                         <AccordionBody>
                             {setting.map((item)=>{return <Link
                               key={item.name}
                               to={item.href}
                               className={classNames(
-                                item.current===path.section ? 'bg-indigo-800 text-white' : 'text-white hover:bg-indigo-700 hover:bg-opacity-75',
-                                'group flex ml-14 items-center px-2 py-2 text-sm font-medium rounded-md'
+                                item.current===path.settingsection ? 'bg-indigo-800 text-white' : 'text-white hover:bg-indigo-700 hover:bg-opacity-75',
+                                'group mb-2 flex ml-14 items-center px-2 py-2 text-sm font-medium rounded-md'
                               )}
                             >
                               {item.name}
@@ -277,8 +286,8 @@ const navigation = [
                 <Bars3Icon className="h-6 w-6" aria-hidden="true" />
               </button>
             </div>
-            <div className="md:hidden border-l-2 ml-6 my-3"></div>
-            <main className="flex-1">
+            <div className="md:hidden sticky border-l-2 ml-6 my-3"></div>
+            <main className="flex-1 sticky">
               <div className=" flex py-5" style={{alignItems:'center'}}>
                 <div className="flex px-5" style={{alignItems:'center'}}>
                   <MagnifyingGlassIcon className="mr-3 flex-shrink-0 h-5 w-5 text-indigo-300" aria-hidden="true"/>
