@@ -9,7 +9,7 @@ import { useEffect } from 'react';
 import Login from './Components/Login';
 import IsLogged from './Components/PrivateRoutes/IsLogged';
 import Profile from './Components/Profile';
-import IsNotLogged from './Components/PrivateRoutes/IsNotLogged';
+// import IsNotLogged from './Components/PrivateRoutes/IsNotLogged';
 import {AnimatePresence,motion} from 'framer-motion'
 
 function App() {
@@ -63,7 +63,7 @@ function App() {
                   exit='exit'
                   transition={{ duration: .7  }}
                   className='w-full h-full absolute min-h-screen bg-white'
-                  ><IsNotLogged to='/user'><Profile/></IsNotLogged>
+                  ><Profile/>
                   </motion.div>
                   } />
               <Route path='/user/setting/:settingsection' element={<motion.div
@@ -73,7 +73,7 @@ function App() {
                   exit='exit'
                   transition={{ duration: .7  }}
                   className='w-full h-full absolute min-h-screen bg-white'
-                  ><IsNotLogged to='/user'><Profile/></IsNotLogged>
+                  ><Profile/>
               </motion.div>
               } />
               <Route path='*' element={<motion.div

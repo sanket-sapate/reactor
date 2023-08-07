@@ -9,7 +9,7 @@ import { BookmarkIcon, FolderIcon,Cog6ToothIcon, ArrowLeftOnRectangleIcon } from
 const navigation = [
     {name:'Collection',icon:FolderIcon,to:'/user/collection'},
     {name:'Favorites',icon:BookmarkIcon,to:'/user/favorite'},
-    {name:'Setting',icon:Cog6ToothIcon,to:'/user/settings'}
+    {name:'Setting',icon:Cog6ToothIcon,to:'/user/setting/account'}
 ]
 function UserMenu({user}) {
     const [open,setOpen] = useState(false)

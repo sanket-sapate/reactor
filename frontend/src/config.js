@@ -2,6 +2,7 @@ const config = {
     API_BASE_URL: process.env.REACT_APP_API_BASE_URL,
     APP_NAME: process.env.REACT_APP_APP_NAME,
     RECAPTCHA_KEY : process.env.REACT_APP_RECAPTCHA_KEY,
+    APP_URL : process.env.REACT_APP_URL,
     TOAST_UI : {
       position: "top-right",
       autoClose: 3000,

@@ -49,11 +49,11 @@ const navigation = [
       if(window.location.pathname.includes('setting')){
         setAccord(true)
       }
-      setTimeout(()=>{
-        if(window.location.pathname==='/user'){
-          navigate('dashboard')
-        }
-      },700)
+      // setTimeout(()=>{
+      //   if(window.location.pathname==='/user'){
+      //     navigate('dashboard')
+      //   }
+      // },700)
     },[setAccord,navigate])
     function renderSwitch(){
       switch(path.section){
