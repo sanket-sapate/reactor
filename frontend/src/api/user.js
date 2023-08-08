@@ -8,10 +8,13 @@ export async function loginApi(email, password, tokenRecaptcha) {
   });
 }
 
-export async function registerApi(email, password) {
+export async function registerApi(name,email, password,username,tokenRecaptcha) {
   return axios.post("/auth/register", {
+    name,
     email,
     password,
+    username,
+    tokenRecaptcha
   });
 }
 

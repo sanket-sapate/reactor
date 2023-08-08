@@ -16,9 +16,14 @@ function generateToken(user) {
 async function register(req, res) {
     try {
         let {
-            email, password
+            email, password,username,name,tokenRecaptcha
         } = req.body;
-
+        let captcha = await verifyRecaptcha(tokenRecaptcha)
+        if(!captcha){
+            return res.status(400).send({
+                error: 'Invalid captcha'
+            })
+        }
         if (!email || !password) {
             return res.status(400).send({
                 error: 'Incomplete data'
@@ -38,25 +43,26 @@ async function register(req, res) {
         password = brcypt.hashSync(password);
 
         user = await User.create({
-            name, email, 
+            name, email,
             signinMethod: 'email-password',
-            password
+            password,username
         });
 
         const token = generateToken(user);
-        const { _id, name, image } = user;
+        const { _id} = user;
 
         return res.send({
-            message: 'Login successful',
+            message: 'Verification mail sent successfully',
             data: {
                 token,
                 user: {
-                    _id, name, email, image
+                    _id, name, email,username
                 }
             }
         })
 
     } catch(err) {
+        console.log(err)
         return res.status(500).send({
             error: 'Something went wrong'
         })
@@ -133,9 +139,14 @@ async function googleLogin(req,res){
         if(!user){
             user = await User.create({
                 name, email, 
-                signinMethod: 'google-signin',image
+                signinMethod: 'google-signin',image,
+                isVerified:true
             });
             req.body.redirect = true
+        }else if(!user.isVerified){
+            user.updateOne({
+                isVerified:true
+            })
         }
         token = generateToken(user);
         const { _id} = user;

@@ -13,7 +13,8 @@ async function sendEmail(to,subject,token) {
             {
               "ContentType": "HTML",
               // '<html><body><a referrerpolicy="no-referrer" href="localhost:3000/resetPassword/'+token+'>Reset Password</a><p>Link expires in 15 minutes</p></body></html>
-              "Content": '<h1>Reset Password</h1><p>Click on the link below to reset your password</p><a referrerpolicy="no-referrer" href="'+FRONTEND_URL+'/reset-password/'+token+'">Reset Password</a>'
+              "Content": subject=='Reset Password'?'<h1>Reset Password</h1><p>Click on the link below to reset your password</p><a referrerpolicy="no-referrer" href="'+FRONTEND_URL+'/reset-password/'+token+'">Reset Password</a>':
+                          '<h1>Verify Email</h1><p>Click on the link below to verify your email</p><a referrerpolicy="no-referrer" href="'+FRONTEND_URL+'/verify-email/'+token+'">Verify</a>'
             }
           ],
           "Headers": {

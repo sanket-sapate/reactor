@@ -13,7 +13,7 @@ import CreateNew from "./CreateNew";
         <center>
             <UserCard user={user}/>
             <AnimatePresence>
-                {!user?<CreateNew key={user}/> : <></>}
+                {!user?<CreateNew key={user?.name}/> : <></>}
             </AnimatePresence>
         </center>
     </div>

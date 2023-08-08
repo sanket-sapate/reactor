@@ -2,35 +2,92 @@ import React, { useRef, useState } from "react";
 import {motion} from 'framer-motion'
 import ReCAPTCHA from "react-google-recaptcha";
 import config from "../../config";
-
+import { registerApi } from "../../api/user";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { userDetailAction } from "../../Redux/action";
+const exitOut ={
+    initial:{
+        top:0
+    },
+    animate:{
+        top:0
+    },
+    exit:{
+        height:0,
+        top:'-500px'
+    }
+}
 export default function CreateNew(){
-    const [input,setInput] = useState({})    
+    const {TOAST_UI,SET_COOKIEE,RECAPTCHA_KEY} = config
+    const [ input,setInput] = useState({})    
     const [error,setError] = useState({})  
     const captchaRef = useRef(null)  
+    const dispatch = useDispatch()
     const formInput =[
-            {name:'Full Name',placeholder:'Enter Name',error:error.name,type:'text'},
-            {name:'UserName',placeholder:'Enter Preferred Username',error:error.username,type:'text'},
-            {name:'Email Address',placeholder:'Enter Email',error:error.email,type:'email'},
-            {name:'Password',placeholder:'Enter Password',error:error.Password,type:'password'},
-            {name:'Confirm Password',placeholder:'Confirm Password',error:error['Confirm Password'],type:'password'},
+            {name:'name',content:'Full Name',placeholder:'Enter Name',error:error.name,type:'text'},
+            {name:'username',content:'Username',placeholder:'Enter Preferred Username',error:error.username,type:'text'},
+            {name:'email',content:'Email Address',placeholder:'Enter Email',error:error.email,type:'email'},
+            {name:'password',content:'Password',placeholder:'Enter Password',error:error.password,type:'password'},
+            {name:'confirm',content:'Confirm Password',placeholder:'Confirm Password',error:error.confirm,type:'password'},
         ]
+    function createAccount(e){
+        e.preventDefault()
+        let flag = false
+        formInput.forEach((item)=>{
+            if(item.error){
+                flag=true
+            }
+        })
+        if(flag){
+            toast.error('All conditions not met',TOAST_UI)
+            return
+        }
+        captchaRef.current.executeAsync()
+        .then((tokenRecaptcha)=>{
+            registerApi(input.name,input.email,input.password,input.username,tokenRecaptcha)
+            .then((res)=>{
+                toast.success(res.data.message,TOAST_UI)
+                const {token,user} = res.data.data;
+                SET_COOKIEE('auth-token',token,15)
+                dispatch(userDetailAction(user))
+                captchaRef.current.reset();
+            })
+            .catch((res)=>{
+                toast.error(res.response.data.error,TOAST_UI)
+                captchaRef.current.reset();
+            })
+        })
+        .catch((err)=>{
+            toast.error(err,TOAST_UI)
+            captchaRef.current.reset();
+        })
+        
+    }
     function onChangeInput(e){
         const value = e.target.value
+        let text = error.password||''
         switch (e.target.name) {
-            case 'Password':
+            case 'password':
                 if(value.length<8)
+                    text='Minimum 8 characters'
+                else
+                    text=''
+            case 'confirm':
+                if(input.password!==value){
                     setError({
                         ...error,
-                        'Password':'Password length should be minimum 8 characters'
+                        'confirm':"Password doesn't match",
+                        password:text
+                    })  
+                }
+                else{
+                    setError({
+                        ...error,
+                        'confirm':"",
+                        password:text
                     })
-                else
-                setError({
-                    ...error,
-                    'Password':''
-                })
-                break;
-            case 'Confirm Password':
-
+                }
                 break;
             default:
                 break;
@@ -40,24 +97,24 @@ export default function CreateNew(){
             [e.target.name]:value
         })
     }
-    return <motion.div className="border-2 rounded-lg bg-slate-100 md:w-2/3 border-slate-300 p-3 py-4 md:x-10">
+    return <motion.div key='new' variants={exitOut} initial='initial' animate='animate' exit='exit' transition={{duration:.7}} className="border-2 rounded-lg bg-slate-100 md:w-2/3 border-slate-300 p-3 py-4 md:x-10">
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 pb-10 lg:px-8">
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Create New Account
           </h2>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <form className="space-y-6" onSubmit={createAccount}>
             {
                 formInput.map((item)=>{
                     return(
                     <div key={item.name}>
                         <div className="flex items-center justify-between">
                             <label htmlFor={item.name} className="block text-start text-sm font-medium leading-6 text-gray-900">
-                                {item.name}
+                                {item.content}
                             </label>
                             <div className="text-sm">
-                                <p  className="font-semibold transition-all text-red-600 hover:text-red-500">
+                                <p className="font-semibold transition-all text-red-600 hover:text-red-500">
                                     {item.error}
                                 </p>
                             </div>
@@ -91,7 +148,7 @@ export default function CreateNew(){
       </div>
       <div className="flex items-center justify-center">
             <ReCAPTCHA
-            sitekey={config.RECAPTCHA_KEY}
+            sitekey={RECAPTCHA_KEY}
             ref={captchaRef}
             size="invisible"
             />
