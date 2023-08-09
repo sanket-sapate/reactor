@@ -5,10 +5,10 @@ const sendEmail = require("./sendEmail.js");
 const brcypt = require('bcryptjs');
 const {verifyRecaptcha} = require("./recaptcha.js");
 function generateToken(user) {
-    const { _id, name, email, image} = user;
+    const { _id, name, email, image,emailVerification,isVerified} = user;
 
     return jwt.sign({
-        _id, name, email, image
+        _id, name, email, image,emailVerification,isVerified                                                                                   
     }, config.JWT_SECRET_KEY);
 
 }
@@ -45,12 +45,16 @@ async function register(req, res) {
         user = await User.create({
             name, email,
             signinMethod: 'email-password',
-            password,username
+            password,username,
+            isVerified:false
         });
 
-        const token = generateToken(user);
+        const token = generateToken({
+            ...user._doc,
+            emailVerification:true
+        });
         const { _id} = user;
-
+        sendEmail(email,'Email Verification',token)
         return res.send({
             message: 'Verification mail sent successfully',
             data: {
@@ -143,11 +147,13 @@ async function googleLogin(req,res){
                 isVerified:true
             });
             req.body.redirect = true
-        }else if(!user.isVerified){
-            user.updateOne({
-                isVerified:true
-            })
-        }
+        }else {
+            if(!user.isVerified){
+               await User.findByIdAndUpdate(user._id,{$set:{isVerified:true}})
+            }
+            if(!user.image){
+               await User.findOneAndUpdate({_id:user._id},{$set:{image}})
+            }}
         token = generateToken(user);
         const { _id} = user;
 

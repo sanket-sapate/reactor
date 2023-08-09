@@ -8,6 +8,7 @@ const UserSchema = new mongoose.Schema({
     gender: String,
     image: String,
     signinMethod: String, // 'email-password', 'google-oauth'
+    isVerified:Boolean
 }, {
     timestamps: true
 })
