@@ -58,3 +58,9 @@ export async function checkTokenApi(token) {
     token,
   });
 }
+
+export async function checkAvailability(username){
+  return axios.post("/auth/checkUsername", {
+    username,
+  })
+}

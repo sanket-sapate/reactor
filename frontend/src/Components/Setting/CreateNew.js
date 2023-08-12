@@ -2,10 +2,11 @@ import React, { useRef, useState } from "react";
 import {motion} from 'framer-motion'
 import ReCAPTCHA from "react-google-recaptcha";
 import config from "../../config";
-import { registerApi } from "../../api/user";
+import { registerApi,checkAvailability } from "../../api/user";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { userDetailAction } from "../../Redux/action";
+let id = null
 const exitOut ={
     initial:{
         top:0
@@ -25,12 +26,31 @@ export default function CreateNew(){
     const captchaRef = useRef(null)  
     const dispatch = useDispatch()
     const formInput =[
-            {name:'name',content:'Full Name',placeholder:'Enter Name',error:error.name,type:'text'},
-            {name:'username',content:'Username',placeholder:'Enter Preferred Username',error:error.username,type:'text'},
-            {name:'email',content:'Email Address',placeholder:'Enter Email',error:error.email,type:'email'},
-            {name:'password',content:'Password',placeholder:'Enter Password',error:error.password,type:'password'},
-            {name:'confirm',content:'Confirm Password',placeholder:'Confirm Password',error:error.confirm,type:'password'},
-        ]
+        {name:'name',content:'Full Name',placeholder:'Enter Name',error:error.name,type:'text'},
+        {name:'username',content:'Username',placeholder:'Enter Preferred Username',error:error.username,type:'text'},
+        {name:'email',content:'Email Address',placeholder:'Enter Email',error:error.email,type:'email'},
+        {name:'password',content:'Password',placeholder:'Enter Password',error:error.password,type:'password'},
+        {name:'confirm',content:'Confirm Password',placeholder:'Confirm Password',error:error.confirm,type:'password'},
+    ]
+    function checkUsername(username){
+        clearTimeout(id)
+        id = setTimeout(() => {
+            checkAvailability(username)
+            .then((res)=>{
+                if(res.data?.isAvailable){
+                    setError({
+                        ...error,
+                        username:false
+                    })
+                }else{
+                    setError({
+                        ...error,
+                        username:res.data?.result
+                    })
+                }
+            })
+        }, 1000);
+    }
     function createAccount(e){
         e.preventDefault()
         let flag = false
@@ -68,6 +88,10 @@ export default function CreateNew(){
         const value = e.target.value
         let text = error.password||''
         switch (e.target.name) {
+            case 'username':
+                checkUsername(value)
+                
+                break;
             case 'password':
                 if(value.length<8)
                     text='Minimum 8 characters'
@@ -100,7 +124,7 @@ export default function CreateNew(){
     return <motion.div key='new' variants={exitOut} initial='initial' animate='animate' exit='exit' transition={{duration:.7}} className="border-2 rounded-lg bg-slate-100 md:w-2/3 border-slate-300 p-3 py-4 md:x-10">
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 pb-10 lg:px-8">
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Create New Account
+            Register Account
           </h2>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -114,9 +138,12 @@ export default function CreateNew(){
                                 {item.content}
                             </label>
                             <div className="text-sm">
-                                <p className="font-semibold transition-all text-red-600 hover:text-red-500">
+                                {item.error===false?<p className="font-semibold transition-all text-green-600 hover:text-green-500">
+                                    Available
+                                </p>:<p className="font-semibold transition-all text-red-600 hover:text-red-500">
                                     {item.error}
                                 </p>
+                                }
                             </div>
                         </div>
                         <div className="mt-2">

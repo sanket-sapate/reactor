@@ -262,6 +262,29 @@ async function checkToken(req,res){
         })
     }
 }
+
+async function checkUsernameAvailability(req,res){
+    try{
+        const {username} = req.body
+        let user = await User.findOne({
+            username:username, 
+        })
+        if(user){
+            return res.send({
+                result: 'Username exists'
+            })
+        }else{
+            return res.send({
+                result: 'Available',
+                isAvailable:true
+            })
+        }
+    }catch(error){
+        return res.send({
+            message: 'Something went wrong',
+        })
+    }
+}
 module.exports = {
     register,
     login,
@@ -269,5 +292,6 @@ module.exports = {
     googleLogin,
     forgetPassword,
     resetPassword,
-    checkToken
+    checkToken,
+    checkUsernameAvailability
 }
