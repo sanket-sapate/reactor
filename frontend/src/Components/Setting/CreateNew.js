@@ -16,7 +16,6 @@ const exitOut ={
     },
     exit:{
         height:0,
-        top:'-500px'
     }
 }
 export default function CreateNew(){
@@ -121,57 +120,60 @@ export default function CreateNew(){
             [e.target.name]:value
         })
     }
-    return <motion.div key='new' variants={exitOut} initial='initial' animate='animate' exit='exit' transition={{duration:.7}} className="border-2 rounded-lg bg-slate-100 md:w-2/3 border-slate-300 p-3 py-4 md:x-10">
-        <div className="flex min-h-full flex-1 flex-col justify-center px-6 pb-10 lg:px-8">
+    return <motion.div 
+    key='new' variants={exitOut} initial='initial' animate='animate' exit='exit' 
+    transition={{duration:.7}}
+     className="border-2 rounded-lg bg-slate-100 md:w-2/3 border-slate-300 h-fit p-3 py-4 md:x-10 group overflow-hidden ease-linear transition-all">
+        <div className="flex min-h-full flex-1 transition-all overflow-hidden  flex-col justify-center px-6 pb-10 lg:px-8">
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Register Account
           </h2>
-
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" onSubmit={createAccount}>
-            {
-                formInput.map((item)=>{
-                    return(
-                    <div key={item.name}>
-                        <div className="flex items-center justify-between">
-                            <label htmlFor={item.name} className="block text-start text-sm font-medium leading-6 text-gray-900">
-                                {item.content}
-                            </label>
-                            <div className="text-sm">
-                                {item.error===false?<p className="font-semibold transition-all text-green-600 hover:text-green-500">
-                                    Available
-                                </p>:<p className="font-semibold transition-all text-red-600 hover:text-red-500">
-                                    {item.error}
-                                </p>
-                                }
+            <div
+            className="mt-10 origin-top-left sm:mx-auto sm:w-full sm:max-w-sm" >
+            <form className="space-y-6" onSubmit={createAccount}>
+                {
+                    formInput.map((item)=>{
+                        return(
+                            <div key={item.name}>
+                            <div className="flex items-center justify-between">
+                                <label htmlFor={item.name} className="block text-start text-sm font-medium leading-6 text-gray-900">
+                                    {item.content}
+                                </label>
+                                <div className="text-sm">
+                                    {item.error===false?<p className="font-semibold transition-all text-green-600 hover:text-green-500">
+                                        Available
+                                    </p>:<p className="font-semibold transition-all text-red-600 hover:text-red-500">
+                                        {item.error}
+                                    </p>
+                                    }
+                                </div>
+                            </div>
+                            <div className="mt-2">
+                                <input
+                                id={item.name}
+                                name={item.name}
+                                type={item.type}
+                                autoComplete={item.name}
+                                onChange={onChangeInput}
+                                required
+                                className="block px-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                />
                             </div>
                         </div>
-                        <div className="mt-2">
-                            <input
-                            id={item.name}
-                            name={item.name}
-                            type={item.type}
-                            autoComplete={item.name}
-                            onChange={onChangeInput}
-                            required
-                            className="block px-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            />
-                        </div>
-                    </div>
-                    )
-                })
-            }
+                        )
+                    })
+                }
 
-            <div>
-              <button
-                type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                Create 
-              </button>
+                <div>
+                <button
+                    type="submit"
+                    className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    >
+                    Create 
+                </button>
+                </div>
+            </form>
             </div>
-          </form>
-        </div>
       </div>
       <div className="flex items-center justify-center">
             <ReCAPTCHA
