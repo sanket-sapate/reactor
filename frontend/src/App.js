@@ -6,7 +6,7 @@ import { Routes,Route, useLocation } from 'react-router-dom';
 import { isLogin } from './Redux/action';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import Login from './Components/Login';
+import Login from './Components/AuthComponents/Login';
 import IsLogged from './Components/PrivateRoutes/IsLogged';
 import Profile from './Components/Profile';
 // import IsNotLogged from './Components/PrivateRoutes/IsNotLogged';

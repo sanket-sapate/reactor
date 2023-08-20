@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react'
-import { googleApi } from '../api/user'
+import { googleApi } from '../../api/user'
 import { toast } from 'react-toastify'
-import config from '../config'
-import { userDetailAction } from '../Redux/action'
+import config from '../../config'
+import { userDetailAction } from '../../Redux/action'
 import { useDispatch } from 'react-redux'
   const loadScript = (src) =>
   new Promise((resolve, reject) => {

@@ -97,15 +97,13 @@ async function login(req, res) {
 
         // Create JWT token
         const token = generateToken(user);
-        const { _id, name, image } = user;
+        delete user.password;
 
         return res.send({
             message: 'Login successful',
             data: {
                 token,
-                user: {
-                    _id, name, email, image
-                }
+                user
             }
         })
 
@@ -155,16 +153,16 @@ async function googleLogin(req,res){
                await User.findOneAndUpdate({_id:user._id},{$set:{image}})
             }}
         token = generateToken(user);
-        const { _id} = user;
+        user = await User.findOne({
+            email,
+        })
+        delete user.password;
 
         return res.send({
             message: 'Login successful',
             data: {
                 token,
-                user: {
-                    _id, name, email, image
-                },
-                redirect : req.body.redirect?true:false
+                user
             }
         })
     } catch (error) {
@@ -241,8 +239,8 @@ async function resetPassword(req,res){
 async function checkToken(req,res){
     try {
         const {token} = req.body
-        let {email,iat} = jwt.verify(token,config.JWT_SECRET_KEY)
-        if(!email ){
+        let {email,iat,emailVerification} = jwt.verify(token,config.JWT_SECRET_KEY)
+        if(!email && !emailVerification ){
             throw new Error()
         }
         if(iat+15*60<Math.floor(Date.now()/1000)){
@@ -285,6 +283,27 @@ async function checkUsernameAvailability(req,res){
         })
     }
 }
+
+async function verifyEmail(req,res){
+    try{
+        const {token} = req.body
+        let {email,iat} = jwt.verify(token,config.JWT_SECRET_KEY)
+        if(!email ){
+            throw new Error()
+        }
+        if(iat+6*60*60<Math.floor(Date.now()/1000)){
+            return res.send({
+                message: 'Time expired',
+                result:false
+            })    
+        }
+    }catch{
+        return res.send({
+            message: 'Token not verified',
+            result:false
+        })
+    }
+}
 module.exports = {
     register,
     login,
@@ -293,5 +312,6 @@ module.exports = {
     forgetPassword,
     resetPassword,
     checkToken,
+    verifyEmail,
     checkUsernameAvailability
 }

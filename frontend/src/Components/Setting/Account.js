@@ -2,7 +2,7 @@ import React from "react";
 import {useSelector} from 'react-redux'
 import {AnimatePresence} from 'framer-motion'
 import UserCard from "./UserCard";
-import CreateNew from "./CreateNew";
+import CreateNew from "../AuthComponents/CreateNew";
 // function classNames(...classes) {
 //     return classes.filter(Boolean).join(' ')
 //   }
@@ -13,7 +13,7 @@ import CreateNew from "./CreateNew";
         <center>
             <UserCard user={user}/>
             <AnimatePresence>
-                {!user?<CreateNew key={user?.name}/> : <></>}
+                {!user?<CreateNew key='user'/> : <></>}
             </AnimatePresence>
         </center>
     </div>

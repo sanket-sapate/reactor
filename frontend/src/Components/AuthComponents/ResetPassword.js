@@ -1,10 +1,10 @@
 import React, { useEffect, useState,useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import LoadingComp from "./LoadingComp";
-import { checkTokenApi } from "../api/user";
-import config from "../config";
+import LoadingComp from "../LoadingComp";
+import { checkTokenApi } from "../../api/user";
+import config from "../../config";
 import ReCAPTCHA from "react-google-recaptcha";
-import { resetPasswordApi } from "../api/user";
+import { resetPasswordApi } from "../../api/user";
 import {toast} from 'react-toastify'
 function ResetPassword() {
     const {token} = useParams();

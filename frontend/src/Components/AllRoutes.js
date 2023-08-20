@@ -11,7 +11,7 @@ const Campus = lazy( ()=>import  ("./Campus"))
 const Contribute = lazy( ()=>import  ("./Contribute"))
 const IsNotLogged = lazy( ()=>import  ('./PrivateRoutes/IsNotLogged'))
 // const Profile = lazy( ()=>import  ('./Profile'))
-const ResetPassword = lazy( ()=>import  ('./ResetPassword'))
+const ResetPassword = lazy( ()=>import  ('./AuthComponents/ResetPassword'))
 const Collections = lazy( ()=>import  ('./Collections'))
 const Favorites = lazy( ()=>import  ('./Favorites'))
 function AllRoutes (){
