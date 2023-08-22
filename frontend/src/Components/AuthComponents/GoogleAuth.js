@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef,memo } from 'react'
 import { googleApi } from '../../api/user'
 import { toast } from 'react-toastify'
 import config from '../../config'
@@ -62,4 +62,4 @@ const GoogleAuth = () => {
   )
 }
 
-export default GoogleAuth
+export default memo( GoogleAuth)

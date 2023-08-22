@@ -1,6 +1,7 @@
 import React,{Suspense,lazy} from "react";
 import { Route, Routes } from "react-router-dom";
 import LoadingComp from "./LoadingComp";
+import NotFound from "./NotFound";
 const SendEmailVerification = lazy(()=>import ("./AuthComponents/SendEmailVerification"));
 const VerifyEmail = lazy( ()=>import("./AuthComponents/VerifyEmail"));
 const Home = lazy( ()=>import  ('./Home'))
@@ -51,7 +52,7 @@ function AllRoutes (){
             <Route path='/favorites' element={<IsNotLogged to="/signin"><Favorites/></IsNotLogged>} />
             <Route path='/verify-email/:token' element={<VerifyEmail/>}/>
             <Route path='/verify-email' element={<SendEmailVerification/>}/>
-            <Route path='*' element={<div>Not found</div>}/>
+            <Route path='*' element={<NotFound/>}/>
         </Routes>
         </Suspense>
       </div>
