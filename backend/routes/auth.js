@@ -1,6 +1,6 @@
 
 const express = require('express');
-const { register, login, getLoggedInUser,googleLogin,forgetPassword,resetPassword,checkToken, checkUsernameAvailability, verifyEmail } = require('../controllers/auth.js');
+const { register, login, getLoggedInUser,googleLogin,forgetPassword,resetPassword,checkToken,sendVerifyEmail, checkUsernameAvailability, verifyEmail } = require('../controllers/auth.js');
 const authMiddleware = require('../middlewares/auth.js');
 
 const authRouter = express.Router();
@@ -14,5 +14,6 @@ authRouter.post('/resetPassword', resetPassword);
 authRouter.post('/checkToken', checkToken);
 authRouter.post('/verifyEmail', verifyEmail);
 authRouter.post('/checkUsername', checkUsernameAvailability);
+authRouter.post('/sendVerifyEmail', sendVerifyEmail);
 
 module.exports = authRouter;

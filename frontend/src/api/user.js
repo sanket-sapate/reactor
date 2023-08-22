@@ -64,3 +64,15 @@ export async function checkAvailability(username){
     username,
   })
 }
+
+export async function verifyEmailApi (token){
+  return axios.post('/auth/verifyEmail',{
+    token
+  })
+}
+
+export async function sendVerifyEmailApi (email){
+  return axios.post('/auth/sendVerifyEmail',{
+    email
+  })
+}

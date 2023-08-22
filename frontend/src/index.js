@@ -10,15 +10,15 @@ import LoadingComp from './Components/LoadingComp';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<div className='min-h-screen'>
-      <StrictMode>
-  <Provider store={store}>
-    <BrowserRouter>
-        <Suspense fallback={<LoadingComp/>}>
-          <App />
-        </Suspense>
-    </BrowserRouter>
-  </Provider>
-        </StrictMode>
+  {/* <StrictMode> */}
+    <Provider store={store}>
+      <BrowserRouter>
+          <Suspense fallback={<LoadingComp/>}>
+            <App />
+          </Suspense>
+      </BrowserRouter>
+    </Provider>
+  {/* </StrictMode> */}
   </div>
 );
 

@@ -291,16 +291,58 @@ async function verifyEmail(req,res){
         if(!email ){
             throw new Error()
         }
-        if(iat+6*60*60<Math.floor(Date.now()/1000)){
+        const user = await User.findOne({email})
+        if(user.isVerified){
             return res.send({
+                message: 'Email Already Verified'
+            })
+        }else if(iat+6*60*60<Math.floor(Date.now()/1000)){
+            return res.status(400).send({
                 message: 'Time expired',
                 result:false
-            })    
+            })
+        }else{
+            await User.findByIdAndUpdate(user._id,{$set:{isVerified:true}})
+            return res.send({
+                message: 'Email Verified Successfully'
+            })
         }
     }catch{
-        return res.send({
+        return res.status(400).send({
             message: 'Token not verified',
             result:false
+        })
+    }
+}
+
+async function sendVerifyEmail(req,res){
+    try{
+        const {email} = req.body
+        const user = await User.findOne({email})
+        if(!user){
+            return res.status(400).send({
+                message: 'User not found'
+            })
+        }
+        if(user.isVerified){
+            return res.status(400).send({
+                message: 'Email Already Verified'
+            })
+        }
+        const token = generateToken({email})
+        const response = await sendEmail(user.email,'Email Verification',token)
+        if(!response){
+            return res.status(400).send({
+                message: 'Something went wrong'
+            })
+        }
+        return res.send({
+            message: 'Verification mail sent successfully'
+        })
+        
+    }catch(error){
+        return res.status(400).send({
+            message: 'Something went wrong'
         })
     }
 }
@@ -313,5 +355,6 @@ module.exports = {
     resetPassword,
     checkToken,
     verifyEmail,
-    checkUsernameAvailability
+    checkUsernameAvailability,
+    sendVerifyEmail
 }
