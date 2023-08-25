@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import ReactLoading from 'react-loading'
 import { useNavigate, useParams } from "react-router-dom";
 import { verifyEmailApi } from "../../api/user";
