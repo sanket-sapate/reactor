@@ -6,6 +6,7 @@ import { registerApi,checkAvailability } from "../../api/user";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { userDetailAction } from "../../Redux/action";
+import {Helmet} from 'react-helmet'
 let id = null
 const exitOut ={
     initial:{
@@ -120,7 +121,16 @@ export default function CreateNew(){
             [e.target.name]:value
         })
     }
-    return <motion.div 
+    return <>
+    <Helmet>
+        <title>Create New Account | ConceptLab</title>
+        <meta name="description" content="Create New Account on ConceptLab" />
+        <meta property="og:title" content="New Account | ConceptLab" />
+        <meta property="og:description" content="Create New Account on ConceptLab" />
+        <meta name="twitter:title" content="New Account | ConceptLab" />
+        <meta name="twitter:description" content="Create New Account on ConceptLab" />
+    </Helmet>
+    <motion.div 
     key='new' variants={exitOut} initial='initial' animate='animate' exit='exit' 
     transition={{duration:.7}}
      className="border-2 rounded-lg bg-slate-100 md:w-2/3 border-slate-300 h-fit p-3 py-4 md:x-10 group overflow-hidden ease-linear transition-all">
@@ -183,6 +193,7 @@ export default function CreateNew(){
             />
         </div>
     </motion.div>
+    </>
 }
     // <motion.div className="border-2 rounded-lg bg-slate-200 md:w-2/3 border-slate-300 p-3 py-4 md:x-10 flex flex-col ">
     //     <p className="text-xl font-semibold">Create New Account</p>

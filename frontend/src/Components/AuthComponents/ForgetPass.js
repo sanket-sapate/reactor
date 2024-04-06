@@ -3,6 +3,7 @@ import config from "../../config";
 import ReCAPTCHA from "react-google-recaptcha";
 import {toast} from 'react-toastify'
 import { forgetPasswordApi } from "../../api/user";
+import {Helmet } from 'react-helmet'
 function ForgetPass({setIsForget}) {
     const [user,setUser] = useState({
         email:'',
@@ -43,6 +44,15 @@ function ForgetPass({setIsForget}) {
         })
     }
     return <>
+    <Helmet>
+        <title>Forget Password | ConceptLab</title>
+        <meta name="description" content="Change password on ConceptLab"/>
+        <meta name="keywords" content="Forget Password"/>
+        <meta property="og:title" content="Forget Password | ConceptLab"/>
+        <meta property="og:description" content="Change password on ConceptLab"/>
+        <meta name="twitter:title" content="Forget Password | ConceptLab"/>
+        <meta name="twitter:description" content="Change password on ConceptLab"/>
+    </Helmet>
     <div className="relative isolate pt-[calc(50vh+10vw)] sm:pt-0 lg:px-8">
         <div
             className="absolute inset-x-0 top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"

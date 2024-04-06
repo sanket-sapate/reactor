@@ -6,6 +6,7 @@ import { loginApi } from "../../api/user";
 import {toast} from 'react-toastify'
 import { userDetailAction } from '../../Redux/action'
 import { useDispatch } from 'react-redux'
+import {Helmet } from 'react-helmet'
 function LoginForm({setIsForget}){
     const {RECAPTCHA_KEY,TOAST_UI,SET_COOKIEE} = config;
     const dispatch = useDispatch();
@@ -44,6 +45,15 @@ function LoginForm({setIsForget}){
         })
     }
     return (<>
+    <Helmet>
+        <title>Login | ConceptLab</title>
+        <meta name="description" content="Login to ConceptLab"/>
+        <meta name="keywords" content="Login"/>
+        <meta property="og:title" content="Login | ConceptLab"/>
+        <meta property="og:description" content="Login to ConceptLab"/>
+        <meta name="twitter:title" content="Login | ConceptLab"/>
+        <meta name="twitter:description" content="Login to ConceptLab"/>
+    </Helmet>
     <div className="relative isolate pt-[calc(50vh+10vw)] sm:pt-0 lg:px-8">
         <div
             className="absolute inset-x-0 top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"

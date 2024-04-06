@@ -1,9 +1,19 @@
 import React from "react";
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
+import {Helmet} from 'react-helmet'
 
 function Contribute(){
-    document.title = 'Contribute'
-  return (
+    
+  return (<>
+    <Helmet>
+        <title>Contribute | ConceptLab</title>
+        <meta name="description" content="Contribute to ConceptLab by creating a 3D model"/>
+        <meta name="keywords" content="Contribute"/>
+        <meta property="og:title" content="Contribute | ConceptLab"/>
+        <meta property="og:description" content="Contribute to ConceptLab by creating a 3D model"/>
+        <meta name="twitter:title" content="Contribute | ConceptLab"/>
+        <meta name="twitter:description" content="Contribute to ConceptLab by creating a 3D model"/>
+    </Helmet>
     <form className="sm:w-1/2 mx-auto my-6">
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
@@ -332,6 +342,7 @@ function Contribute(){
         </button>
       </div>
     </form>
+    </>
   )
 }
 

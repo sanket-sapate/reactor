@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { MagnifyingGlassIcon} from '@heroicons/react/24/outline'
-
+import { Helmet } from 'react-helmet'
 const Home = ()=>{
     let image = ['https://vnit.ac.in/cse/wp-content/uploads/2018/10/Campus-Pics-img37.jpg','https://vnit.ac.in/cvip2022/assets/img/vnit/Night-Photo.jpg','https://vnit.ac.in/cvip2022/assets/img/vnit/Main_Bldg_Final_1.jpg','https://vnit.ac.in/wp-content/uploads/2020/09/new.jpg']
     const [currIndex,setCurrIndex] = useState(0)
@@ -17,6 +17,12 @@ const Home = ()=>{
     document.title = 'Home'
 return (
     <>
+    <Helmet>
+        <title>Home | ConceptLab</title>
+        <meta name="keywords" content="3D Model Sharing"/>
+        <meta property="og:title" content="Home | ConceptLab"/>
+        <meta name="twitter:title" content="Home | ConceptLab"/>
+    </Helmet>
     <div className="mx-auto max-w-2xl py-32  ">
         <div className="relative -mt-10  sm:h-[280px] h-[180px] mx-auto justify-center sm:w-2/3 mb-10">
             <img alt='' src={image[currIndex%image.length]} className="rounded-md align-middle  w-full "/>

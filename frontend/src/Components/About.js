@@ -1,8 +1,17 @@
 import React from "react";
-
+import {Helmet } from 'react-helmet'
 const About = ()=>{
     document.title = 'About Project'
     return <div>
+        <Helmet>
+            <title>About Project | ConceptLab</title>
+            <meta name="description" content="Discover VNIT Nagpur's innovative educational platform where students can upload 3D models, enhancing learning experiences across various fields. Powered by Spline's intuitive design tools, collaboration is seamless, enabling visualization of complex concepts. Join internal and external users in creating and sharing immersive 3D content, fostering deeper understanding and recognition through issued credentials."/>
+            <meta name="keywords" content="About Project"/>
+            <meta property="og:title" content="About Project | ConceptLab"/>
+            <meta property="og:description" content="Discover VNIT Nagpur's innovative educational platform where students can upload 3D models, enhancing learning experiences across various fields. Powered by Spline's intuitive design tools, collaboration is seamless, enabling visualization of complex concepts. Join internal and external users in creating and sharing immersive 3D content, fostering deeper understanding and recognition through issued credentials."/>
+            <meta name="twitter:title" content="About Project | ConceptLab"/>
+            <meta name="twitter:description" content="Discover VNIT Nagpur's innovative educational platform where students can upload 3D models, enhancing learning experiences across various fields. Powered by Spline's intuitive design tools, collaboration is seamless, enabling visualization of complex concepts. Join internal and external users in creating and sharing immersive 3D content, fostering deeper understanding and recognition through issued credentials."/>
+        </Helmet>
         <div className="mt-8 font-bold tracking-tight text-gray-900 text-3xl text-center sm:text-left">
             About Project
         </div>

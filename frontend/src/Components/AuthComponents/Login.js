@@ -4,11 +4,22 @@ import {useNavigate} from 'react-router-dom'
 import LoginForm from "./LoginForm";
 import ForgetPass from "./ForgetPass";
 import {motion} from 'framer-motion'
+import {Helmet } from 'react-helmet'
 function Login() {
     const navigate = useNavigate()
     const [isForget,setIsForget] = React.useState(false)
     const screen = window.screen.width
-    return <motion.div
+    return <>
+    <Helmet>
+        <title>Login | ConceptLab</title>
+        <meta name="description" content="Login to ConceptLab"/>
+        <meta name="keywords" content="Login"/>
+        <meta property="og:title" content="Login | ConceptLab"/>
+        <meta property="og:description" content="Login to ConceptLab"/>
+        <meta name="twitter:title" content="Login | ConceptLab"/>
+        <meta name="twitter:description" content="Login to ConceptLab"/>
+    </Helmet>
+    <motion.div
     initial={{opacity:1}}
     animate={{opacity:1}}
     exit={{opacity:0}}
@@ -27,8 +38,8 @@ function Login() {
                 }
             </div>
         </div>
-    {/* </> */}
     </motion.div>
+    </>
 }
 
 export default Login

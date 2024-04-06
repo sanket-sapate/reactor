@@ -6,6 +6,7 @@ import config from "../../config";
 import ReCAPTCHA from "react-google-recaptcha";
 import { resetPasswordApi } from "../../api/user";
 import {toast} from 'react-toastify'
+import {Helmet } from 'react-helmet'
 function ResetPassword() {
     const {token} = useParams();
     const navigate = useNavigate();
@@ -91,8 +92,17 @@ function ResetPassword() {
         })
     }
     const {RECAPTCHA_KEY,TOAST_UI} = config;
-  return (
-    tokenResponse===null? <LoadingComp/>:
+  return (<>
+  <Helmet>
+        <title>Reset Password | ConceptLab</title>
+        <meta name="description" content="Reset password on ConceptLab"/>
+        <meta name="keywords" content="Reset Password"/>
+        <meta property="og:title" content="Reset Password | ConceptLab"/>
+        <meta property="og:description" content="Reset password on ConceptLab"/>
+        <meta name="twitter:title" content="Reset Password | ConceptLab"/>
+        <meta name="twitter:description" content="Reset password on ConceptLab"/>
+  </Helmet>
+   { tokenResponse===null? <LoadingComp/>:
     <div className="mt-5">{
     tokenResponse===false?
         <div>Token is invalid</div>
@@ -178,7 +188,9 @@ function ResetPassword() {
         </div>
     </div>   
         }
-  </div>);
+  </div>}
+  
+  </>);
 }
 
 export default ResetPassword;

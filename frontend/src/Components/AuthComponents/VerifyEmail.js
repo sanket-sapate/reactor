@@ -22,8 +22,10 @@ export default function VerifyEmail(){
     useEffect(()=>{
         VerifyEmail()
     },[])
-    return <div className="flex mt-5 justify-evenly  h-[50vh] items-center flex-col">
+    return <>
+    <div className="flex mt-5 justify-evenly  h-[50vh] items-center flex-col">
             <h1 className="text-2xl ">Verifying email</h1>
             <ReactLoading type="spokes" color="rgb(79 70 299)"/>
     </div>
+    </>
 }

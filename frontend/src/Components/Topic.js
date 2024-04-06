@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { subjectAction,departmentAction } from "../Redux/action";
-
+import {Helmet} from 'react-helmet'
 const Topic = ()=>{
     const {department} = useParams()
     const departments = useSelector((storeData)=>storeData.department)
@@ -15,6 +15,15 @@ const Topic = ()=>{
       dispatch(departmentAction)
     },[department,dispatch])
     return <div className="min-h-[88vh]">
+      <Helmet>
+            <title>Choose Topic | ConceptLab</title>
+            <meta name="description" content="Choose Topic from various departments"/>
+            <meta name="keywords" content="Choose Topic"/>
+            <meta property="og:title" content="Choose Topic | ConceptLab"/>
+            <meta property="og:description" content="Choose Topic from various departments"/>
+            <meta name="twitter:title" content="Choose Topic | ConceptLab"/>
+            <meta name="twitter:description" content="Choose Topic from various departments"/>
+      </Helmet>
         <div className="pt-10 font-semibold text-lg">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat asperiores ea recusandae quaerat explicabo dolor tempora quod, blanditiis ratione animi autem eius neque minus excepturi doloribus! Harum, rem ipsum? In.
         </div>
