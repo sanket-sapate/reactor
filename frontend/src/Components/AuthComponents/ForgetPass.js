@@ -3,7 +3,7 @@ import config from "../../config";
 import ReCAPTCHA from "react-google-recaptcha";
 import {toast} from 'react-toastify'
 import { forgetPasswordApi } from "../../api/user";
-import {Helmet } from 'react-helmet'
+import {Helmet } from 'react-helmet-async'
 function ForgetPass({setIsForget}) {
     const [user,setUser] = useState({
         email:'',

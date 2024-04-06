@@ -1,6 +1,6 @@
 import React from "react";
 import Spline from '@splinetool/react-spline';
-import {Helmet} from 'react-helmet'
+import {Helmet} from 'react-helmet-async'
 function Campus() {
     
     return <>

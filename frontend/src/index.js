@@ -7,15 +7,17 @@ import { Provider } from 'react-redux';
 import store from './Redux/store';
 import { BrowserRouter } from 'react-router-dom';
 import LoadingComp from './Components/LoadingComp';
-
+import {HelmetProvider} from 'react-helmet-async'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<div className='min-h-screen'>
   {/* <StrictMode> */}
     <Provider store={store}>
       <BrowserRouter>
-          <Suspense fallback={<LoadingComp/>}>
-            <App />
-          </Suspense>
+        <HelmetProvider>
+            <Suspense fallback={<LoadingComp/>}>
+              <App />
+            </Suspense>
+        </HelmetProvider>
       </BrowserRouter>
     </Provider>
   {/* </StrictMode> */}

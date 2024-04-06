@@ -4,7 +4,7 @@ import {useNavigate} from 'react-router-dom'
 import LoginForm from "./LoginForm";
 import ForgetPass from "./ForgetPass";
 import {motion} from 'framer-motion'
-import {Helmet } from 'react-helmet'
+import {Helmet } from 'react-helmet-async'
 function Login() {
     const navigate = useNavigate()
     const [isForget,setIsForget] = React.useState(false)

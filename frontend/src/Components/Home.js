@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { MagnifyingGlassIcon} from '@heroicons/react/24/outline'
-import { Helmet } from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
 const Home = ()=>{
     let image = ['https://vnit.ac.in/cse/wp-content/uploads/2018/10/Campus-Pics-img37.jpg','https://vnit.ac.in/cvip2022/assets/img/vnit/Night-Photo.jpg','https://vnit.ac.in/cvip2022/assets/img/vnit/Main_Bldg_Final_1.jpg','https://vnit.ac.in/wp-content/uploads/2020/09/new.jpg']
     const [currIndex,setCurrIndex] = useState(0)

@@ -6,7 +6,7 @@ import { registerApi,checkAvailability } from "../../api/user";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { userDetailAction } from "../../Redux/action";
-import {Helmet} from 'react-helmet'
+import {Helmet} from 'react-helmet-async'
 let id = null
 const exitOut ={
     initial:{

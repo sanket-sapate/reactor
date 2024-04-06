@@ -6,7 +6,7 @@ import config from "../../config";
 import ReCAPTCHA from "react-google-recaptcha";
 import { resetPasswordApi } from "../../api/user";
 import {toast} from 'react-toastify'
-import {Helmet } from 'react-helmet'
+import {Helmet } from 'react-helmet-async'
 function ResetPassword() {
     const {token} = useParams();
     const navigate = useNavigate();

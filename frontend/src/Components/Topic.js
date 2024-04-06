@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { subjectAction,departmentAction } from "../Redux/action";
-import {Helmet} from 'react-helmet'
+import {Helmet} from 'react-helmet-async'
 const Topic = ()=>{
     const {department} = useParams()
     const departments = useSelector((storeData)=>storeData.department)

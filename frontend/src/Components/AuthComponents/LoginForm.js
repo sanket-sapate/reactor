@@ -6,7 +6,7 @@ import { loginApi } from "../../api/user";
 import {toast} from 'react-toastify'
 import { userDetailAction } from '../../Redux/action'
 import { useDispatch } from 'react-redux'
-import {Helmet } from 'react-helmet'
+import {Helmet } from 'react-helmet-async'
 function LoginForm({setIsForget}){
     const {RECAPTCHA_KEY,TOAST_UI,SET_COOKIEE} = config;
     const dispatch = useDispatch();

@@ -1,6 +1,6 @@
 import React from "react";
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
-import {Helmet} from 'react-helmet'
+import {Helmet} from 'react-helmet-async'
 
 function Contribute(){
     
