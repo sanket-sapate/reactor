@@ -13,13 +13,13 @@ const Model = ()=>{
     },[dispatch,department,topic])
     return (<div className="mt-5 min-h-[79vh]">
         <Helmet>
-            <title>{obj?.title} | ConceptLab</title>
-            <meta name="description" content={obj?.description[0]}/>
-            <meta name="keywords" content={obj?.title}/>
+            <title>{`${obj?.title}`} | ConceptLab</title>
+            <meta name="description" content={`${obj?.description[0]}`}/>
+            <meta name="keywords" content={`${obj?.title}`}/>
             <meta property="og:title" content={`${obj?.title} | ConceptLab`}/>
             <meta property="og:description" content={obj?.description[0]}/>
             <meta name="twitter:title" content={`${obj?.title} | ConceptLab`}/>
-            <meta name="twitter:description" content={obj?.description[0]}/>
+            <meta name="twitter:description" content={`${obj?.description[0]}`}/>
         </Helmet>
         {obj?<div>
             <div className="text-center sm:text-left text-xl font-bold">
